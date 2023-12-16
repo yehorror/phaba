@@ -8,5 +8,6 @@ add_executable(phaba-playground Main.cpp "Application/Application.cpp" "Renderer
 
 find_package(SDL2)
 find_package(glew)
+find_package(glm)
 
-target_link_libraries(phaba-playground PRIVATE SDL2::SDL2-static GLEW::GLEW)
+target_link_libraries(phaba-playground PRIVATE SDL2::SDL2-static GLEW::GLEW glm::glm)
