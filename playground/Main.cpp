@@ -39,7 +39,7 @@ int main()
                 std::begin(s_vertices), std::end(s_vertices)
             ));
 
-        renderer.SetScale(0.1f);
+        float scale = 0.5;
 
         bool works = true;
         while (works)
@@ -54,6 +54,20 @@ int main()
                 {
                     works = false;
                 }
+                if (event->type == SDL_KEYDOWN)
+                {
+                    switch (event->key.keysym.sym)
+                    {
+                    case 'w':
+                        scale += 0.1f;
+                        break;
+                    case 's':
+                        scale -= 0.1f;
+                        break;
+                    }
+                    
+                    renderer.SetScale(scale);
+                }
             }
 
             // OpenGL starts here
@@ -65,7 +79,7 @@ int main()
 
             // OpenGL ends here
 
-            SDL_Delay(33);
+            SDL_Delay(16);
         }
     }
     catch (const std::exception& exception)
