@@ -21,7 +21,6 @@ namespace Playground
         };
 
     private:
-        GLuint m_elementBuffer;
         GLuint m_ubo;
         GLuint m_programID;
         GLuint m_uboID;

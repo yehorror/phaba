@@ -85,15 +85,6 @@ namespace Playground
         glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(s_colors), s_colors, GL_STATIC_DRAW);
 
-        static const GLuint s_indices[] = {
-            0, 1, 2,
-            0, 2, 3
-        };
-
-        glGenBuffers(1, &m_elementBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(s_indices), s_indices, GL_STATIC_DRAW);
-
         m_programID = LoadShaders();
 
         glUseProgram(m_programID);
@@ -110,8 +101,6 @@ namespace Playground
         glEnableVertexAttribArray(0);
 
         shape.Bind();
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
 
         glVertexAttribPointer(
             0,
