@@ -9,6 +9,28 @@ namespace Playground
         glBufferData(GL_ARRAY_BUFFER, colors.size_bytes(), colors.data(), GL_STATIC_DRAW);
     }
 
+    Colors::Colors(Colors&& rhs) noexcept
+        : m_colorBuffer(rhs.m_colorBuffer)
+    {
+        rhs.m_colorBuffer = 0;
+    }
+
+    Colors& Colors::operator=(Colors&& rhs) noexcept
+    {
+        m_colorBuffer = rhs.m_colorBuffer;
+        rhs.m_colorBuffer = 0;
+
+        return *this;
+    }
+
+    Colors::~Colors()
+    {
+        if (m_colorBuffer)
+        {
+            glDeleteBuffers(1, &m_colorBuffer);
+        }
+    }
+
     void Colors::Bind(GLuint attributeIndex) const
     {
         glEnableVertexAttribArray(1);

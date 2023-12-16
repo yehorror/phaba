@@ -4,6 +4,7 @@
 #include "Renderer/Shape/Shape.hpp"
 #include "Renderer/Colors/Colors.hpp"
 #include "Loader/Loader.hpp"
+#include "Scene/Scene.hpp"
 
 int main()
 {
@@ -14,20 +15,7 @@ int main()
         Playground::Application application;
         Playground::Renderer renderer;
 
-        static const Playground::Color s_whiteBox[] = {
-            Playground::kWhite, Playground::kWhite, Playground::kWhite, Playground::kWhite
-        };
-
-        static const Playground::Color s_redBox[] = {
-            Playground::kRed, Playground::kRed, Playground::kRed, Playground::kRed
-        };
-
-        auto whiteColors = Playground::Colors(std::span<const Playground::Color>(s_whiteBox));
-        auto redColors = Playground::Colors(std::span<const Playground::Color>(s_redBox));
-
-        auto boxVertices = Playground::LoadShape("Misc/shapes/box");
-        
-        auto box = Playground::Shape(std::span<const glm::vec2>(boxVertices));
+        Playground::Scene scene(renderer);
 
         float scale = 0.5;
 
@@ -64,8 +52,7 @@ int main()
 
             angle += 0.001f;
 
-            renderer.Draw(box, whiteColors, angle, {0.5f, 0.5f});
-            renderer.Draw(box, redColors, -angle, {-0.5f, -0.5f});
+            scene.Render();
 
             // OpenGL ends here
 

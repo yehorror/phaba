@@ -46,6 +46,51 @@ namespace Playground
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
     }
 
+    Shape::Shape(Shape&& rhs)
+        : m_vertexArrayID(rhs.m_vertexArrayID)
+        , m_vertexBuffer(rhs.m_vertexBuffer)
+        , m_elementBuffer(rhs.m_elementBuffer)
+        , m_elementsNum(rhs.m_elementsNum)
+    {
+        rhs.m_vertexArrayID = 0;
+        rhs.m_vertexBuffer = 0;
+        rhs.m_elementBuffer = 0;
+        rhs.m_elementsNum = 0;
+    }
+
+    Shape& Shape::operator=(Shape&& rhs) noexcept
+    {
+        m_vertexArrayID = rhs.m_vertexArrayID;
+        m_vertexBuffer = rhs.m_vertexBuffer;
+        m_elementBuffer = rhs.m_elementBuffer;
+        m_elementsNum = rhs.m_elementsNum;
+
+        rhs.m_vertexArrayID = 0;
+        rhs.m_vertexBuffer = 0;
+        rhs.m_elementBuffer = 0;
+        rhs.m_elementsNum = 0;
+
+        return *this;
+    }
+
+    Shape::~Shape()
+    {
+        if (m_vertexArrayID)
+        {
+            glDeleteVertexArrays(1, &m_vertexArrayID);
+        }
+
+        if (m_vertexBuffer)
+        {
+            glDeleteBuffers(1, &m_vertexBuffer);
+        }
+
+        if (m_elementBuffer)
+        {
+            glDeleteBuffers(1, &m_elementBuffer);
+        }
+    }
+
     void Shape::Bind(GLuint attributeIndex) const
     {
         glEnableVertexAttribArray(attributeIndex);

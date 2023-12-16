@@ -19,10 +19,16 @@ namespace Playground
     public:
         explicit Colors(const std::span<const Color>& colors);
 
+        Colors() = default;
+        Colors(Colors&& rhs) noexcept;
+        Colors& operator= (Colors&& rhs) noexcept;
+
+        ~Colors();
+
         void Bind(GLuint attributeIndex) const;
 
     private:
-        GLuint m_colorBuffer;
+        GLuint m_colorBuffer{};
     };
 
     constexpr Playground::Color kWhite = { 1.f, 1.f, 1.f };

@@ -6,5 +6,5 @@
 
 namespace Playground
 {
-    std::vector<glm::vec2> LoadShape(std::filesystem::path path);
+    std::vector<glm::vec2> LoadVertices(std::filesystem::path path);
 }
