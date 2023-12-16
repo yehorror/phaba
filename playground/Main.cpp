@@ -7,8 +7,6 @@
 
 int main()
 {
-    float angle = 0.5f;
-
     try
     {
         Playground::Application application;

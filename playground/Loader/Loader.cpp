@@ -1,10 +1,5 @@
 #include "Loader.hpp"
 #include <fstream>
-#include <optional>
-
-namespace
-{
-}
 
 namespace Playground
 {
