@@ -35,6 +35,8 @@ namespace Playground
 
     std::optional<SDL_Event> Application::PollEvent()
     {
+        SDL_GL_SwapWindow(m_windowHandle);
+
         SDL_Event event{};
         if (SDL_PollEvent(&event))
         {
