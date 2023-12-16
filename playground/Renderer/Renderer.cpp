@@ -74,21 +74,6 @@ namespace Playground
 {
     Renderer::Renderer()
     {
-        glGenVertexArrays(1, &m_vertexArrayID);
-        glBindVertexArray(m_vertexArrayID);
-
-        static const GLfloat s_vertices[] = {
-            -1.0f,  1.0f, 0.0f,
-             1.0f,  1.0f, 0.0f,
-             1.0f, -1.0f, 0.0f,
-            -1.0f, -1.0f, 0.0f,
-        };
-
-        glGenBuffers(1, &m_vertexBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-
-        glBufferData(GL_ARRAY_BUFFER, sizeof(s_vertices), s_vertices, GL_STATIC_DRAW);
-
         static const GLfloat s_colors[] = {
             1.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
@@ -123,12 +108,14 @@ namespace Playground
     void Renderer::Draw(const Shape& shape, float angle, glm::vec2 pos)
     {
         glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+
+        shape.Bind();
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
 
         glVertexAttribPointer(
             0,
-            3,
+            2,
             GL_FLOAT,
             GL_FALSE,
             0,

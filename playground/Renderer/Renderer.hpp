@@ -21,8 +21,6 @@ namespace Playground
         };
 
     private:
-        GLuint m_vertexArrayID;
-        GLuint m_vertexBuffer;
         GLuint m_elementBuffer;
         GLuint m_ubo;
         GLuint m_programID;

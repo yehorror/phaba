@@ -8,7 +8,7 @@
 
 int main()
 {
-    float scale = 0.5f;
+    float angle = 0.5f;
 
     try
     {
@@ -47,10 +47,10 @@ int main()
 
             // OpenGL starts here
 
-            scale += 0.001f;
+            angle += 0.001f;
 
-            renderer.Draw(box, scale, {0.5f, 0.5f});
-            renderer.Draw(box, -scale, {-0.5f, -0.5f});
+            renderer.Draw(box, angle, {0.5f, 0.5f});
+            renderer.Draw(box, -angle, {-0.5f, -0.5f});
 
             // OpenGL ends here
 
