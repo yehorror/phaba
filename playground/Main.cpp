@@ -1,7 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <fstream>
-#include <sstream>
 #include "Application/Application.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Shape/Shape.hpp"
