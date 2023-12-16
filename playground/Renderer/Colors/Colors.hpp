@@ -19,7 +19,7 @@ namespace Playground
     public:
         explicit Colors(const std::span<const Color>& colors);
 
-        void Bind() const;
+        void Bind(GLuint attributeIndex) const;
 
     private:
         GLuint m_colorBuffer;

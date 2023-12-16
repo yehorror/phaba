@@ -39,6 +39,8 @@ int main()
                 std::begin(s_vertices), std::end(s_vertices)
             ));
 
+        renderer.SetScale(0.1f);
+
         bool works = true;
         while (works)
         {

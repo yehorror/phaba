@@ -24,13 +24,14 @@ constexpr std::string_view VERTEX_SHADER = R"shader(
     {
         mat4 transform;
         vec2 offset;
+        float scale;
     };
     
     out vec3 fragmentColor;
     
     void main()
     {
-        gl_Position = transform * vec4(vertexPos, 0.f, 1.f) + vec4(offset, 0.0, 0.0);
+        gl_Position = (transform * vec4(vertexPos, 0.f, 1.f) + vec4(offset, 0.0, 0.0)) * scale;
         gl_Position.w = 1.0;
     
         fragmentColor = vertexColor;

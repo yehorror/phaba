@@ -12,7 +12,7 @@ namespace Playground
         explicit Shape(const std::span<const glm::vec2> vertices);
 
     public:
-        void Bind() const;
+        void Bind(GLuint attributeIndex) const;
         void Draw() const;
 
     private:

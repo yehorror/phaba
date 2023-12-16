@@ -46,10 +46,22 @@ namespace Playground
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
     }
 
-    void Shape::Bind() const
+    void Shape::Bind(GLuint attributeIndex) const
     {
+        glEnableVertexAttribArray(attributeIndex);
+
         glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
+
+        glVertexAttribPointer(
+            attributeIndex,
+            2,
+            GL_FLOAT,
+            GL_FALSE,
+            0,
+            nullptr
+        );
+
     }
 
     void Shape::Draw() const

@@ -87,24 +87,14 @@ namespace Playground
 
     void Renderer::Draw(const Shape& shape, const Colors& colors, float angle, glm::vec2 pos)
     {
-        glEnableVertexAttribArray(0);
-
-        shape.Bind();
-
-        glVertexAttribPointer(
-            0,
-            2,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            nullptr
-        );
+        shape.Bind(0);
 
         UBO uboData{};
 
         uboData.transform = glm::mat4x4{ 1.f };
         uboData.transform = glm::rotate(uboData.transform, angle, { 0.f, 0.f, 1.f });
         uboData.offset = pos;
+        uboData.scale = m_scale;
 
         glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
         glBufferData(GL_UNIFORM_BUFFER, sizeof(uboData), &uboData, GL_STREAM_DRAW);
@@ -112,9 +102,14 @@ namespace Playground
 
         glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_ubo, 0, sizeof(uboData));
 
-        colors.Bind();
+        colors.Bind(1);
         shape.Draw();
 
         glDisableVertexAttribArray(0);
+    }
+
+    void Renderer::SetScale(float scale)
+    {
+        m_scale = scale;
     }
 }
