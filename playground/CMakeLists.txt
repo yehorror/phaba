@@ -11,3 +11,5 @@ find_package(glew)
 find_package(glm)
 
 target_link_libraries(phaba-playground PRIVATE SDL2::SDL2-static GLEW::GLEW glm::glm)
+
+add_subdirectory(Misc)

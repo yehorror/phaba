@@ -24,4 +24,7 @@ namespace Playground
     private:
         GLuint m_colorBuffer;
     };
+
+    constexpr Playground::Color kWhite = { 1.f, 1.f, 1.f };
+    constexpr Playground::Color kRed = { 1.f, 0.f, 0.f };
 }
