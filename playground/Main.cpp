@@ -71,6 +71,8 @@ GLuint LoadShaders()
 
 int main()
 {
+    float scale = 0.1f;
+
     try
     {
         Playground::Application application;
@@ -120,6 +122,10 @@ int main()
 
         glUseProgram(programID);
 
+        GLuint ubo;
+        glGenBuffers(1, &ubo);
+        glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+
         // OpenGL ends here
 
         bool works = true;
@@ -139,6 +145,8 @@ int main()
 
             // OpenGL starts here
 
+            scale += 0.01f;
+
             glEnableVertexAttribArray(0);
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
@@ -151,6 +159,11 @@ int main()
                 0,
                 nullptr
             );
+
+            glBufferData(GL_UNIFORM_BUFFER, sizeof(scale), &scale, GL_DYNAMIC_DRAW);
+            const GLuint uboID = glGetUniformBlockIndex(programID, "Matrices");
+            glUniformBlockBinding(programID, uboID, 2);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 2, uboID);
 
             glEnableVertexAttribArray(1);
             glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
