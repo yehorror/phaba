@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 
-file(GLOB misc_files "shapes/*")
+file(GLOB_RECURSE misc_files "*")
 
 foreach(file ${misc_files})
     file(RELATIVE_PATH relative_file ${CMAKE_CURRENT_SOURCE_DIR} ${file})

@@ -2,9 +2,20 @@
 
 #include <vector>
 #include <filesystem>
-#include <glm/vec2.hpp>
+#include "Scene/Scene.hpp"
+#include "Storage/Storage.hpp"
 
 namespace Playground
 {
-    std::vector<glm::vec2> LoadVertices(std::filesystem::path path);
+    class Loader
+    {
+    public:
+        Scene LoadScene(std::filesystem::path path);
+
+    private:
+        Object LoadObject(std::filesystem::path path);
+
+    private:
+        Storage m_storage;
+    };
 }

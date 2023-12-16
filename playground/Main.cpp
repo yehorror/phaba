@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Application/Application.hpp"
 #include "Renderer/Renderer.hpp"
-#include "Renderer/Shape/Shape.hpp"
 #include "Renderer/Colors/Colors.hpp"
 #include "Loader/Loader.hpp"
 #include "Scene/Scene.hpp"
@@ -15,9 +14,11 @@ int main()
         Playground::Application application;
         Playground::Renderer renderer;
 
-        Playground::Scene scene(renderer);
+        Playground::Loader loader;
 
-        float scale = 0.5;
+        Playground::Scene scene = loader.LoadScene("Misc/scenes/level1");
+
+        float scale = 0.1;
 
         bool works = true;
         while (works)
@@ -43,18 +44,12 @@ int main()
                         scale -= 0.1f;
                         break;
                     }
-                    
-                    renderer.SetScale(scale);
                 }
             }
 
-            // OpenGL starts here
+            renderer.SetScale(scale);
 
-            angle += 0.001f;
-
-            scene.Render();
-
-            // OpenGL ends here
+            scene.Render(renderer);
 
             SDL_Delay(16);
         }

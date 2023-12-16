@@ -1,9 +1,44 @@
 #include "Loader.hpp"
 #include <fstream>
+#include <optional>
+
+namespace
+{
+}
 
 namespace Playground
 {
-    std::vector<glm::vec2> LoadVertices(std::filesystem::path path)
+    Scene Loader::LoadScene(std::filesystem::path path)
+    {
+        Playground::Scene scene;
+
+        std::ifstream input(path);
+        if (!input.is_open())
+        {
+            throw std::runtime_error("Failed to open file [" + path.string() + "]");
+        }
+
+        std::string objectName{};
+        input >> objectName;
+
+        while (objectName != "END")
+        {
+            Object objectToAdd = LoadObject("Misc/objects/" + objectName);
+
+            // Read position
+            input >> objectToAdd.position.x >> objectToAdd.position.y;
+
+            // Read angle
+            input >> objectToAdd.angle;
+
+            scene.AddObject(objectToAdd);
+            input >> objectName;
+        }
+
+        return scene;
+    }
+
+    Object Loader::LoadObject(std::filesystem::path path)
     {
         std::ifstream input(path);
         if (!input.is_open())
@@ -11,20 +46,13 @@ namespace Playground
             throw std::runtime_error("Failed to open file [" + path.string() + "]");
         }
 
-        unsigned int numVertices{};
-        input >> numVertices;
+        std::string shapeName{};
+        input >> shapeName;
+        // Other fields aren't interesting for now
+        // But the 'Object' will represent composition of physical object and other necessary info in the future
 
-        std::vector<glm::vec2> result;
-        result.reserve(numVertices);
+        auto& shape = m_storage.GetShape(shapeName);
 
-        for (unsigned int i = 0; i < numVertices; ++i)
-        {
-            float x{}, y{};
-            input >> x >> y;
-
-            result.push_back({x, y});
-        }
-
-        return result;
+        return { shape, {0.f, 0.f}, 0.f };
     }
 }

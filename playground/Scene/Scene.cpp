@@ -3,24 +3,25 @@
 
 namespace Playground
 {
-    Scene::Scene(Renderer& renderer)
-        : m_renderer(renderer)
+    Scene::Scene()
     {
         static const Playground::Color s_whiteBox[] = {
             Playground::kWhite, Playground::kWhite, Playground::kWhite, Playground::kWhite
         };
 
-        m_whiteColors = std::move(Playground::Colors(std::span<const Playground::Color>(s_whiteBox)));
-
-        auto boxVertices = Playground::LoadVertices("Misc/shapes/box");
-
-        m_box = Playground::Shape(std::span<const glm::vec2>(boxVertices));
+        m_whiteColors = Playground::Colors(s_whiteBox);
     }
 
-    void Scene::Render()
+    void Scene::AddObject(const Object& object)
     {
-        m_angle += 0.001f;
-        m_renderer.Draw(m_box, m_whiteColors, m_angle, { 0.5f, 0.5f });
-        m_renderer.Draw(m_box, m_whiteColors, -m_angle, { -0.5f, -0.5f });
+        m_objects.emplace_back(object);
+    }
+
+    void Scene::Render(Renderer& renderer)
+    {
+        for (const auto& object : m_objects)
+        {
+            renderer.Draw(object.shape, m_whiteColors, object.angle, object.position);
+        }
     }
 }

@@ -2,21 +2,23 @@
 
 #include <vector>
 #include "Renderer/Renderer.hpp"
+#include "Object/Object.hpp"
 
 namespace Playground
 {
     class Scene
     {
     public:
+        Scene();
 
-        explicit Scene(Renderer& renderer);
+        void AddObject(const Object& object);
 
-        void Render();
+        void Render(Renderer& renderer);
 
     private:
-        Renderer& m_renderer;
-        Playground::Shape m_box;
         Playground::Colors m_whiteColors;
+
+        std::vector<Object> m_objects;
 
         float m_angle{ 0.0f };
     };
