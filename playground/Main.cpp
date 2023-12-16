@@ -71,7 +71,7 @@ GLuint LoadShaders()
 
 int main()
 {
-    float scale = 0.1f;
+    float scale = 0.5f;
 
     try
     {
@@ -145,7 +145,7 @@ int main()
 
             // OpenGL starts here
 
-            scale += 0.01f;
+            scale += 0.0001f;
 
             glEnableVertexAttribArray(0);
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -160,10 +160,13 @@ int main()
                 nullptr
             );
 
-            glBufferData(GL_UNIFORM_BUFFER, sizeof(scale), &scale, GL_DYNAMIC_DRAW);
+            glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+            glBufferData(GL_UNIFORM_BUFFER, sizeof(scale), &scale, GL_STREAM_DRAW);
+            glBindBuffer(GL_UNIFORM_BUFFER, 0);
             const GLuint uboID = glGetUniformBlockIndex(programID, "Matrices");
-            glUniformBlockBinding(programID, uboID, 2);
-            glBindBufferBase(GL_UNIFORM_BUFFER, 2, uboID);
+            glUniformBlockBinding(programID, uboID, 0);
+
+            glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, sizeof(scale));
 
             glEnableVertexAttribArray(1);
             glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
@@ -184,6 +187,8 @@ int main()
             );
 
             glDisableVertexAttribArray(0);
+
+            SDL_Delay(33);
 
             // OpenGL ends here
         }

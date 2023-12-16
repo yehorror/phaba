@@ -20,7 +20,7 @@ constexpr std::string_view VERTEX_SHADER = R"shader(
     layout(location = 0) in vec3 vertexPos;
     layout(location = 1) in vec3 vertexColor;
 
-    layout (std140, binding = 2) uniform Matrices
+    layout (std140) uniform Matrices
     {
         //mat4 transform;
         float scale;
@@ -30,7 +30,7 @@ constexpr std::string_view VERTEX_SHADER = R"shader(
     
     void main()
     {
-        gl_Position.xyz = 0.5 * vertexPos;
+        gl_Position.xyz = scale * vertexPos;
         gl_Position.w = 1.0;
     
         fragmentColor = vertexColor;
