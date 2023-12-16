@@ -4,6 +4,7 @@
 #include <sstream>
 #include "Application/Application.hpp"
 #include "Renderer/Renderer.hpp"
+#include "Renderer/Shape/Shape.hpp"
 
 int main()
 {
@@ -16,6 +17,18 @@ int main()
         // OpenGL starts here
         Playground::Renderer renderer;
         // OpenGL ends here
+
+        static const glm::vec2 s_vertices[] = {
+            {-1.0f,  1.0f},
+            { 1.0f,  1.0f},
+            { 1.0f, -1.0f},
+            {-1.0f, -1.0f}
+        };
+
+        auto box = Playground::Shape(
+            std::span<const glm::vec2>(
+                std::begin(s_vertices), std::end(s_vertices)
+            ));
 
         bool works = true;
         while (works)
@@ -34,9 +47,10 @@ int main()
 
             // OpenGL starts here
 
-            scale += 0.0001f;
+            scale += 0.001f;
 
-            renderer.Draw();
+            renderer.Draw(box, scale, {0.5f, 0.5f});
+            renderer.Draw(box, -scale, {-0.5f, -0.5f});
 
             // OpenGL ends here
 

@@ -22,15 +22,15 @@ constexpr std::string_view VERTEX_SHADER = R"shader(
 
     layout (std140) uniform Matrices
     {
-        //mat4 transform;
-        float scale;
+        mat4 transform;
+        vec2 offset;
     };
     
     out vec3 fragmentColor;
     
     void main()
     {
-        gl_Position.xyz = scale * vertexPos;
+        gl_Position = transform * vec4(vertexPos, 1.f) + vec4(offset, 0.0, 0.0);
         gl_Position.w = 1.0;
     
         fragmentColor = vertexColor;

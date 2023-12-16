@@ -4,7 +4,7 @@ project(phaba-playground LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(phaba-playground Main.cpp "Application/Application.cpp" "Renderer/Renderer.cpp" "Shaders/Shaders.h")
+add_executable(phaba-playground Main.cpp "Application/Application.cpp" "Renderer/Renderer.cpp" "Renderer/Shaders/Shaders.h" "Renderer/Shape/Shape.cpp")
 
 find_package(SDL2)
 find_package(glew)

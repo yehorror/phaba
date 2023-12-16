@@ -1,6 +1,7 @@
 #include "Renderer.hpp"
 #include "Shaders/Shaders.h"
 #include <vector>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace
 {
@@ -114,11 +115,13 @@ namespace Playground
 
         glGenBuffers(1, &m_ubo);
         glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
+
+        m_uboID = glGetUniformBlockIndex(m_programID, "Matrices");
+        glUniformBlockBinding(m_programID, m_uboID, 0);
     }
 
-    void Renderer::Draw()
+    void Renderer::Draw(const Shape& shape, float angle, glm::vec2 pos)
     {
-        m_scale = 0.3;
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
@@ -132,13 +135,17 @@ namespace Playground
             nullptr
         );
 
-        glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(m_scale), &m_scale, GL_STREAM_DRAW);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
-        m_uboID = glGetUniformBlockIndex(m_programID, "Matrices");
-        glUniformBlockBinding(m_programID, m_uboID, 0);
+        UBO uboData{};
 
-        glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_ubo, 0, sizeof(m_scale));
+        uboData.transform = glm::mat4x4{ 1.f };
+        uboData.transform = glm::rotate(uboData.transform, angle, { 0.f, 0.f, 1.f });
+        uboData.offset = pos;
+
+        glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(uboData), &uboData, GL_STREAM_DRAW);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+        glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_ubo, 0, sizeof(uboData));
 
         glEnableVertexAttribArray(1);
         glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
@@ -151,12 +158,7 @@ namespace Playground
             (void*)0                          // array buffer offset
         );
 
-        glDrawElements(
-            GL_TRIANGLES,      // mode
-            6,    // count
-            GL_UNSIGNED_INT,   // type
-            (void*)0           // element array buffer offset
-        );
+        shape.Draw();
 
         glDisableVertexAttribArray(0);
     }
