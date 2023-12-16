@@ -3,6 +3,7 @@
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Shape/Shape.hpp"
 #include "Renderer/Colors/Colors.hpp"
+#include "Loader/Loader.hpp"
 
 int main()
 {
@@ -24,17 +25,9 @@ int main()
         auto whiteColors = Playground::Colors(std::span<const Playground::Color>(s_whiteBox));
         auto redColors = Playground::Colors(std::span<const Playground::Color>(s_redBox));
 
-        static const glm::vec2 s_vertices[] = {
-            {-1.0f,  1.0f},
-            { 1.0f,  1.0f},
-            { 1.0f, -1.0f},
-            {-1.0f, -1.0f}
-        };
-
-        auto box = Playground::Shape(
-            std::span<const glm::vec2>(
-                std::begin(s_vertices), std::end(s_vertices)
-            ));
+        auto boxVertices = Playground::LoadShape("Misc/shapes/box");
+        
+        auto box = Playground::Shape(std::span<const glm::vec2>(boxVertices));
 
         float scale = 0.5;
 
