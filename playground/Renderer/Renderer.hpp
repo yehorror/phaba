@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <glm/mat4x4.hpp>
 #include "Shape/Shape.hpp"
+#include "Colors/Colors.hpp"
 
 namespace Playground
 {
@@ -11,7 +12,7 @@ namespace Playground
     public:
         Renderer();
 
-        void Draw(const Shape& shape, float angle, glm::vec2 pos);
+        void Draw(const Shape& shape, const Colors& colors, float angle, glm::vec2 pos);
 
     private:
         struct UBO
@@ -24,6 +25,5 @@ namespace Playground
         GLuint m_ubo;
         GLuint m_programID;
         GLuint m_uboID;
-        GLuint m_colorBuffer;
     };
 }

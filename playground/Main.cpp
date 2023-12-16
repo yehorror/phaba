@@ -2,6 +2,7 @@
 #include "Application/Application.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Shape/Shape.hpp"
+#include "Renderer/Colors/Colors.hpp"
 
 int main()
 {
@@ -10,10 +11,21 @@ int main()
     try
     {
         Playground::Application application;
-
-        // OpenGL starts here
         Playground::Renderer renderer;
-        // OpenGL ends here
+
+        static const Playground::Color kWhite = {1.f, 1.f, 1.f};
+        static const Playground::Color kRed = {1.f, 0.f, 0.f};
+
+        static const Playground::Color s_whiteBox[] = {
+            kWhite, kWhite, kWhite, kWhite
+        };
+
+        static const Playground::Color s_redBox[] = {
+            kRed, kRed, kRed, kRed
+        };
+
+        auto whiteColors = Playground::Colors(std::span<const Playground::Color>(s_whiteBox));
+        auto redColors = Playground::Colors(std::span<const Playground::Color>(s_redBox));
 
         static const glm::vec2 s_vertices[] = {
             {-1.0f,  1.0f},
@@ -46,8 +58,8 @@ int main()
 
             angle += 0.001f;
 
-            renderer.Draw(box, angle, {0.5f, 0.5f});
-            renderer.Draw(box, -angle, {-0.5f, -0.5f});
+            renderer.Draw(box, whiteColors, angle, {0.5f, 0.5f});
+            renderer.Draw(box, redColors, -angle, {-0.5f, -0.5f});
 
             // OpenGL ends here
 

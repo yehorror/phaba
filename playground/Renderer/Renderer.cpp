@@ -74,17 +74,6 @@ namespace Playground
 {
     Renderer::Renderer()
     {
-        static const GLfloat s_colors[] = {
-            1.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 1.0f,
-            0.0f, 1.0f, 1.0f,
-        };
-
-        glGenBuffers(1, &m_colorBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(s_colors), s_colors, GL_STATIC_DRAW);
-
         m_programID = LoadShaders();
 
         glUseProgram(m_programID);
@@ -96,7 +85,7 @@ namespace Playground
         glUniformBlockBinding(m_programID, m_uboID, 0);
     }
 
-    void Renderer::Draw(const Shape& shape, float angle, glm::vec2 pos)
+    void Renderer::Draw(const Shape& shape, const Colors& colors, float angle, glm::vec2 pos)
     {
         glEnableVertexAttribArray(0);
 
@@ -123,17 +112,7 @@ namespace Playground
 
         glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_ubo, 0, sizeof(uboData));
 
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-        glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void*)0                          // array buffer offset
-        );
-
+        colors.Bind();
         shape.Draw();
 
         glDisableVertexAttribArray(0);
