@@ -26,6 +26,11 @@ namespace Playground
             // Read angle
             input >> objectToAdd.angle;
 
+            // Type (STATIC or DYNAMIC)
+            // Currently unused
+            std::string type{};
+            input >> type;
+
             scene.AddObject(objectToAdd);
             input >> objectName;
         }
