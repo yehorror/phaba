@@ -3,42 +3,20 @@
 #include <fstream>
 #include <sstream>
 #include "Application/Application.hpp"
+#include "Shaders/Shaders.h"
 
-GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path){
-
+GLuint LoadShaders()
+{
     // Create the shaders
     GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
     GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-    // Read the Vertex Shader code from the file
-    std::string VertexShaderCode;
-    std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
-    if(VertexShaderStream.is_open()){
-        std::stringstream sstr;
-        sstr << VertexShaderStream.rdbuf();
-        VertexShaderCode = sstr.str();
-        VertexShaderStream.close();
-    }else{
-        printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", vertex_file_path);
-        getchar();
-        return 0;
-    }
-
-    // Read the Fragment Shader code from the file
-    std::string FragmentShaderCode;
-    std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
-    if(FragmentShaderStream.is_open()){
-        std::stringstream sstr;
-        sstr << FragmentShaderStream.rdbuf();
-        FragmentShaderCode = sstr.str();
-        FragmentShaderStream.close();
-    }
-
+    std::string VertexShaderCode = VERTEX_SHADER.data();
+    std::string FragmentShaderCode = FRAGMENT_SHADER.data();
     GLint Result = GL_FALSE;
     int InfoLogLength;
 
     // Compile Vertex Shader
-    printf("Compiling shader : %s\n", vertex_file_path);
     char const * VertexSourcePointer = VertexShaderCode.c_str();
     glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
     glCompileShader(VertexShaderID);
@@ -53,7 +31,6 @@ GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path
     }
 
     // Compile Fragment Shader
-    printf("Compiling shader : %s\n", fragment_file_path);
     char const * FragmentSourcePointer = FragmentShaderCode.c_str();
     glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
     glCompileShader(FragmentShaderID);
@@ -105,9 +82,10 @@ int main()
         glBindVertexArray(vertexArrayID);
 
         static const GLfloat s_vertices[] = {
+            -1.0f,  1.0f, 0.0f,
+             1.0f,  1.0f, 0.0f,
+             1.0f, -1.0f, 0.0f,
             -1.0f, -1.0f, 0.0f,
-            1.0f, -1.0f, 0.0f,
-            0.0f,  1.0f, 0.0f,
         };
 
         GLuint vertexBuffer;
@@ -116,10 +94,29 @@ int main()
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(s_vertices), s_vertices, GL_STATIC_DRAW);
 
-        const GLuint programID = LoadShaders(
-            "D:\\physics\\playground\\Shaders\\vertex.glsl", 
-            "D:\\physics\\playground\\Shaders\\fragment.glsl"
-        );
+        static const GLfloat s_colors[] = {
+            1.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 1.0f,
+            0.0f, 1.0f, 1.0f,
+        };
+
+        GLuint colorbuffer;
+        glGenBuffers(1, &colorbuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(s_colors), s_colors, GL_STATIC_DRAW);
+
+        static const GLuint s_indices[] = {
+            0, 1, 2,
+            0, 2, 3
+        };
+
+        GLuint elementbuffer;
+        glGenBuffers(1, &elementbuffer);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(s_indices), s_indices, GL_STATIC_DRAW);
+
+        const GLuint programID = LoadShaders();
 
         glUseProgram(programID);
 
@@ -144,6 +141,7 @@ int main()
 
             glEnableVertexAttribArray(0);
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
             glVertexAttribPointer(
                 0,
@@ -154,8 +152,25 @@ int main()
                 nullptr
             );
 
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            glEnableVertexAttribArray(1);
+            glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+            glVertexAttribPointer(
+                1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+                3,                                // size
+                GL_FLOAT,                         // type
+                GL_FALSE,                         // normalized?
+                0,                                // stride
+                (void*)0                          // array buffer offset
+            );
 
+            glDrawElements(
+                GL_TRIANGLES,      // mode
+                6,    // count
+                GL_UNSIGNED_INT,   // type
+                (void*)0           // element array buffer offset
+            );
+
+            glDisableVertexAttribArray(0);
 
             // OpenGL ends here
         }
