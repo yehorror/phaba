@@ -17,16 +17,20 @@ TEST(WorldTest, WorldCanBeCreated)
 TEST(WorldTest, FreeFallAcceleration_OneSecondStep_VelocityOfBodyChanged)
 {
     constexpr Phaba::TimeDelta kOneSecond = 1.f;
+    constexpr Phaba::Vector2 kGAcceleration = { 0.0f, -9.8f };
 
-    Phaba::World world(Phaba::Vector2{ 0.0f, -9.8f });
+    Phaba::World world(kGAcceleration);
 
     // TODO Actually bodies should be created with some parameters
     // Like mass, parts, etc
-    auto& body = world.CreateBody();
+    auto body = world.CreateBody();
 
     ASSERT_EQ(body.GetVelocity(), Phaba::Vector2(0.0f, 0.0f));
 
     world.Step(kOneSecond);
 
-    EXPECT_EQ(body.GetVelocity(), Phaba::Vector2(0.0f, -9.8f));
+    // After one second it will have a velocity equals to acceleration
+    constexpr Phaba::Vector2 kVelocityAfterOneSecond = kGAcceleration;
+
+    EXPECT_EQ(body.GetVelocity(), kVelocityAfterOneSecond);
 }
