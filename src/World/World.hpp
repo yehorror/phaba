@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "Common.hpp"
 #include "Body/Body.hpp"
 
@@ -11,11 +12,12 @@ namespace Phaba
         World() = default;
         explicit World(Vector2 freeFallAcceleration);
 
-        Body CreateBody();
+        Body& CreateBody();
 
         void Step(TimeDelta timeDelta);
 
     private:
         Vector2 m_freeFallAcceleration;
+        std::vector<Body> m_bodies;
     };
 }

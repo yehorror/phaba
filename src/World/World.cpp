@@ -7,12 +7,16 @@ namespace Phaba
     {
     }
 
-    Body World::CreateBody()
+    Body& World::CreateBody()
     {
-        return Body{};
+        return m_bodies.emplace_back();
     }
 
     void World::Step(TimeDelta timeDelta)
     {
+        for (auto& body : m_bodies)
+        {
+            body.SetVelocity(body.GetVelocity() + m_freeFallAcceleration * timeDelta);
+        }
     }
 }

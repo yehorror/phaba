@@ -12,6 +12,6 @@ namespace Phaba
         void SetVelocity(Vector2 velocity);
 
     private:
-        Vector2 m_velocity{0.f, -9.8f};
+        Vector2 m_velocity;
     };
 }
