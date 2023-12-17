@@ -1,0 +1,2 @@
+# Phaba - 2D physics engine
+My hobby project I am writing in my spare time. The idea is to perform all computations (bodies moving, collisions detection and resolving) on a GPU via compute shaders. For sure it will put some limitation on its possible functionality - e.g. we can't call collisions callbacks from compute shader immediately, but at least it should be (in theory) faster to compute everything on GPU instead of CPU.
