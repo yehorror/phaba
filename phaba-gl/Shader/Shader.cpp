@@ -38,7 +38,7 @@ namespace GL
         }
     }
 
-    GLuint Shader::handle()
+    GLuint Shader::handle() const
     {
         return m_shader;
     }

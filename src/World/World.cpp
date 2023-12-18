@@ -1,5 +1,4 @@
 #include "World.hpp"
-#include <Shader/Shader.hpp>
 #include <stdexcept>
 #include <string_view>
 
@@ -48,16 +47,15 @@ namespace
         Body bodies[kBodiesPreAllocate];
     };
 
-    GLuint CreateComputeShader()
+    GL::Program CreateComputeShader()
     {
-        GL::Shader computeShader(kComputeShader, GL_COMPUTE_SHADER);
+        GL::Program program;
 
-        GLuint computeProgram = glCreateProgram();
+        program
+            .attach(GL::Shader(kComputeShader, GL_COMPUTE_SHADER))
+            .link();
 
-        glAttachShader(computeProgram, computeShader.handle());
-        glLinkProgram(computeProgram);
-
-        return computeProgram;
+        return program;
     }
 
     GLuint CreateBuffer(Bodies& bodies)
@@ -122,7 +120,7 @@ namespace Phaba
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
-        glUseProgram(m_computeProgram);
+        m_computeProgram.use();
         glDispatchCompute(1, 1, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
     }

@@ -12,7 +12,7 @@ namespace GL
 
         ~Shader();
 
-        GLuint handle();
+        GLuint handle() const;
 
     private:
         GLuint m_shader;

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <GL/glew.h>
+#include <Program/Program.hpp>
 #include "Common.hpp"
 #include "Body/Body.hpp"
 
@@ -22,7 +23,7 @@ namespace Phaba
         Vector2 m_freeFallAcceleration;
         std::vector<Body> m_bodiesVec;
 
-        GLuint m_computeProgram{};
+        GL::Program m_computeProgram;
         GLuint m_bodiesBuffer{};
     };
 }
