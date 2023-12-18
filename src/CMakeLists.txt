@@ -10,4 +10,4 @@ find_package(glew)
 find_package(glm)
 
 target_include_directories(phaba PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(phaba PUBLIC GLEW::GLEW glm::glm)
+target_link_libraries(phaba PUBLIC GLEW::GLEW glm::glm phaba-gl)

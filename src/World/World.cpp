@@ -1,10 +1,11 @@
 #include "World.hpp"
+#include <Shader/Shader.hpp>
 #include <stdexcept>
 #include <string_view>
 
 namespace
 {
-    const char* kComputeShader = R"compute(
+    constexpr std::string_view kComputeShader = R"compute(
     #version 430 core
 
     layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
@@ -49,27 +50,11 @@ namespace
 
     GLuint CreateComputeShader()
     {
-        const auto computeProgram = glCreateProgram();
-        const auto computeShader = glCreateShader(GL_COMPUTE_SHADER);
-        glShaderSource(computeShader, 1, &kComputeShader, nullptr);
-        glCompileShader(computeShader);
+        GL::Shader computeShader(kComputeShader, GL_COMPUTE_SHADER);
 
-        GLint param = GL_FALSE;
-        glGetShaderiv(computeShader, GL_COMPILE_STATUS, &param);
+        GLuint computeProgram = glCreateProgram();
 
-        if (param != GL_TRUE)
-        {
-            GLint length{};
-            glGetShaderiv(computeShader, GL_INFO_LOG_LENGTH, &length);
-
-            std::vector<char> VertexShaderErrorMessage(length + 1);
-            glGetShaderInfoLog(computeShader, length, NULL, &VertexShaderErrorMessage[0]);
-            throw std::runtime_error(
-                "Failed to compile compute shader: " + std::string(VertexShaderErrorMessage.cbegin(), VertexShaderErrorMessage.cend())
-            );
-        }
-
-        glAttachShader(computeProgram, computeShader);
+        glAttachShader(computeProgram, computeShader.handle());
         glLinkProgram(computeProgram);
 
         return computeProgram;
