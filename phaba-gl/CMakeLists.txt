@@ -4,7 +4,7 @@ project(phaba-gl LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(phaba-gl "Shader/Shader.cpp" "Shader/Shader.hpp" "Program/Program.cpp")
+add_library(phaba-gl "Shader/Shader.cpp" "Shader/Shader.hpp" "Program/Program.cpp" "Buffer/Buffer.cpp")
 
 find_package(glew)
 

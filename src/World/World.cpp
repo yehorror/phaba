@@ -57,18 +57,6 @@ namespace
 
         return program;
     }
-
-    GLuint CreateBuffer(Bodies& bodies)
-    {
-        GLuint buffer{};
-        glGenBuffers(1, &buffer);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffer);
-        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(bodies), &bodies, GL_DYNAMIC_DRAW);
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, buffer);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-
-        return buffer;
-    }
 }
 
 namespace Phaba
@@ -76,49 +64,54 @@ namespace Phaba
     World::World(Vector2 freeFallAcceleration)
         : m_freeFallAcceleration(std::move(freeFallAcceleration))
         , m_computeProgram(CreateComputeShader())
+        , m_bodiesBuffer(GL_SHADER_STORAGE_BUFFER)
     {
         // Initialize world with 0 bodies
         Bodies bodies{};
 
         bodies.freeFallAcceleration = m_freeFallAcceleration;
 
-        m_bodiesBuffer = CreateBuffer(bodies);
+        m_bodiesBuffer.bind();
+        m_bodiesBuffer.bufferData(&bodies, sizeof(bodies), GL_DYNAMIC_DRAW);
+        m_bodiesBuffer.bindBase(0);
+
+        m_bodiesBuffer.unbind();
     }
 
     Body& World::CreateBody()
     {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodiesBuffer);
+        m_bodiesBuffer.bind();
         auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE));
 
         const auto index = bodies->bodiesNum++;
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+        m_bodiesBuffer.unbind();
 
         return m_bodiesVec.emplace_back(*this, index);
     }
 
     Vector2 World::GetVelocity(unsigned int index) const
     {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodiesBuffer);
+        m_bodiesBuffer.bind();
         auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
 
         const auto velocity = bodies->bodies[index].velocity;
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+        m_bodiesBuffer.unbind();
 
         return velocity;
     }
 
     void World::Step(TimeDelta timeDelta)
     {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodiesBuffer);
+        m_bodiesBuffer.bind();
         auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
         bodies->timeDelta = timeDelta;
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+        m_bodiesBuffer.unbind();
 
         m_computeProgram.use();
         glDispatchCompute(1, 1, 1);

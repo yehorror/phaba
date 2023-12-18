@@ -3,6 +3,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include <Program/Program.hpp>
+#include <Buffer/Buffer.hpp>
 #include "Common.hpp"
 #include "Body/Body.hpp"
 
@@ -24,6 +25,6 @@ namespace Phaba
         std::vector<Body> m_bodiesVec;
 
         GL::Program m_computeProgram;
-        GLuint m_bodiesBuffer{};
+        GL::Buffer m_bodiesBuffer;
     };
 }
