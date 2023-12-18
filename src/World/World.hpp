@@ -23,6 +23,6 @@ namespace Phaba
         std::vector<Body> m_bodiesVec;
 
         GLuint m_computeProgram{};
-        GLuint m_bodies{};
+        GLuint m_bodiesBuffer{};
     };
 }

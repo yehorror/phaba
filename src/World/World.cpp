@@ -46,14 +46,10 @@ namespace
         Phaba::Vector2 freeFallAcceleration;
         Body bodies[kBodiesPreAllocate];
     };
-}
 
-namespace Phaba
-{
-    World::World(Vector2 freeFallAcceleration)
-        : m_freeFallAcceleration(std::move(freeFallAcceleration))
-        , m_computeProgram(glCreateProgram())
+    GLuint CreateComputeShader()
     {
+        const auto computeProgram = glCreateProgram();
         const auto computeShader = glCreateShader(GL_COMPUTE_SHADER);
         glShaderSource(computeShader, 1, &kComputeShader, nullptr);
         glCompileShader(computeShader);
@@ -73,24 +69,42 @@ namespace Phaba
             );
         }
 
-        glAttachShader(m_computeProgram, computeShader);
-        glLinkProgram(m_computeProgram);
+        glAttachShader(computeProgram, computeShader);
+        glLinkProgram(computeProgram);
 
+        return computeProgram;
+    }
+
+    GLuint CreateBuffer(Bodies& bodies)
+    {
+        GLuint buffer{};
+        glGenBuffers(1, &buffer);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffer);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(bodies), &bodies, GL_DYNAMIC_DRAW);
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, buffer);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+        return buffer;
+    }
+}
+
+namespace Phaba
+{
+    World::World(Vector2 freeFallAcceleration)
+        : m_freeFallAcceleration(std::move(freeFallAcceleration))
+        , m_computeProgram(CreateComputeShader())
+    {
         // Initialize world with 0 bodies
         Bodies bodies{};
 
         bodies.freeFallAcceleration = m_freeFallAcceleration;
 
-        glGenBuffers(1, &m_bodies);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodies);
-        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(bodies), &bodies, GL_DYNAMIC_DRAW);
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_bodies);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+        m_bodiesBuffer = CreateBuffer(bodies);
     }
 
     Body& World::CreateBody()
     {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodies);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodiesBuffer);
         auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE));
 
         const auto index = bodies->bodiesNum++;
@@ -103,7 +117,7 @@ namespace Phaba
 
     Vector2 World::GetVelocity(unsigned int index) const
     {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodies);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodiesBuffer);
         auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
 
         const auto velocity = bodies->bodies[index].velocity;
@@ -116,7 +130,7 @@ namespace Phaba
 
     void World::Step(TimeDelta timeDelta)
     {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodies);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_bodiesBuffer);
         auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
         bodies->timeDelta = timeDelta;
 
@@ -126,11 +140,5 @@ namespace Phaba
         glUseProgram(m_computeProgram);
         glDispatchCompute(1, 1, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-        /*
-        for (auto& body : m_bodiesVec)
-        {
-            body.SetVelocity(body.GetVelocity() + m_freeFallAcceleration * timeDelta);
-        }
-        */
     }
 }
