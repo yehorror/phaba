@@ -14,8 +14,8 @@ namespace Phaba
         return m_world.GetVelocity(m_index);
     }
 
-    void Body::SetVelocity(Vector2 velocity)
+    Vector2 Body::GetPosition() const
     {
-        // m_velocity = velocity;
+        return m_world.GetPosition(m_index);
     }
 }

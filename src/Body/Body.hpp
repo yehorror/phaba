@@ -12,7 +12,7 @@ namespace Phaba
         Body(World& world, unsigned int index);
 
         Vector2 GetVelocity() const;
-        void SetVelocity(Vector2 velocity);
+        Vector2 GetPosition() const;
 
     private:
         World& m_world;

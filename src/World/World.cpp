@@ -11,6 +11,7 @@ namespace
 
     struct Body
     {
+        vec2 position;
         vec2 velocity;
     };
 
@@ -26,7 +27,12 @@ namespace
     {
         for (int i = 0; i < bodiesNum; ++i)
         {
+            vec2 originalVelocity = bodies[i].velocity;
             bodies[i].velocity += freeFallAcceleration * timeDelta;
+
+            // If the speed is variable through the time, the formula is
+            // dx = (v1 + v2) * dt / 2;
+            bodies[i].position += (originalVelocity + bodies[i].velocity) * timeDelta / 2.f;
         }
     }
 
@@ -36,6 +42,7 @@ namespace
 
     struct Body
     {
+        Phaba::Vector2 position;
         Phaba::Vector2 velocity;
     };
 
@@ -90,12 +97,18 @@ namespace Phaba
 
     Vector2 World::GetVelocity(unsigned int index) const
     {
-        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
+        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
         auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
 
-        const auto velocity = bodies->bodies[index].velocity;
+        return bodies->bodies[index].velocity;
+    }
+    
+    Vector2 World::GetPosition(unsigned int index) const
+    {
+        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
+        auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
 
-        return velocity;
+        return bodies->bodies[index].position;
     }
 
     void World::Step(TimeDelta timeDelta)

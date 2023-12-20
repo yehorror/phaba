@@ -17,6 +17,7 @@ namespace Phaba
         Body& CreateBody();
 
         Vector2 GetVelocity(unsigned int index) const;
+        Vector2 GetPosition(unsigned int index) const;
 
         void Step(TimeDelta timeDelta);
 
