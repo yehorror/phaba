@@ -4,6 +4,20 @@
 
 namespace GL
 {
+    class MappedMemoryGuard
+    {
+    public:
+        MappedMemoryGuard(void* ptr, GLuint buffer);
+        ~MappedMemoryGuard();
+
+        void* get();
+        operator void* ();
+
+    private:
+        void* m_ptr;
+        const GLuint m_buffer;
+    };
+
     class Buffer
     {
     public:
@@ -14,6 +28,8 @@ namespace GL
         void bindBase(unsigned int ID) const;
 
         void unbind() const;
+
+        MappedMemoryGuard mapMemory(GLenum access) const;
 
         ~Buffer();
 

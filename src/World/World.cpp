@@ -80,40 +80,35 @@ namespace Phaba
 
     Body& World::CreateBody()
     {
-        m_bodiesBuffer.bind();
-        auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE));
+        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
+        auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
 
         const auto index = bodies->bodiesNum++;
-
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        m_bodiesBuffer.unbind();
 
         return m_bodiesVec.emplace_back(*this, index);
     }
 
     Vector2 World::GetVelocity(unsigned int index) const
     {
-        m_bodiesBuffer.bind();
-        auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
+        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
+        auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
 
         const auto velocity = bodies->bodies[index].velocity;
-
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        m_bodiesBuffer.unbind();
 
         return velocity;
     }
 
     void World::Step(TimeDelta timeDelta)
     {
-        m_bodiesBuffer.bind();
-        auto bodies = reinterpret_cast<Bodies*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
-        bodies->timeDelta = timeDelta;
+        {
+            auto mappedMemory = m_bodiesBuffer.mapMemory(GL_WRITE_ONLY);
 
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        m_bodiesBuffer.unbind();
+            auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
+            bodies->timeDelta = timeDelta;
+        }
 
         m_computeProgram.use();
+
         glDispatchCompute(1, 1, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
     }

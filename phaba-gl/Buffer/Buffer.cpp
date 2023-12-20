@@ -2,6 +2,30 @@
 
 namespace GL
 {
+    MappedMemoryGuard::MappedMemoryGuard(void* ptr, GLuint buffer)
+        : m_ptr(ptr)
+        , m_buffer(buffer)
+    {
+    }
+
+    MappedMemoryGuard::~MappedMemoryGuard()
+    {
+        if (m_ptr && m_buffer)
+        {
+            glUnmapNamedBuffer(m_buffer);
+        }
+    }
+
+    void* MappedMemoryGuard::get()
+    {
+        return m_ptr;
+    }
+
+    MappedMemoryGuard::operator void* ()
+    {
+        return m_ptr;
+    }
+
     Buffer::Buffer(GLenum bufferType)
         : m_bufferType(bufferType)
     {
@@ -26,6 +50,11 @@ namespace GL
     void Buffer::unbind() const
     {
         glBindBuffer(m_bufferType, 0);
+    }
+
+    MappedMemoryGuard Buffer::mapMemory(GLenum access) const
+    {
+        return MappedMemoryGuard(glMapNamedBuffer(m_buffer, access), m_buffer);
     }
 
     Buffer::~Buffer()
