@@ -29,7 +29,9 @@ namespace GL
     Buffer::Buffer(GLenum bufferType)
         : m_bufferType(bufferType)
     {
-        glGenBuffers(1, &m_buffer);
+        glCreateBuffers(1, &m_buffer);
+        bind();
+        unbind();
     }
 
     void Buffer::bind() const
@@ -39,7 +41,7 @@ namespace GL
 
     void Buffer::bufferData(void* ptr, size_t size, GLenum type)
     {
-        glBufferData(m_bufferType, size, ptr, type);
+        glNamedBufferData(m_buffer, size, ptr, type);
     }
 
     void Buffer::bindBase(unsigned int ID) const

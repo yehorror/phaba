@@ -78,11 +78,8 @@ namespace Phaba
 
         bodies.freeFallAcceleration = m_freeFallAcceleration;
 
-        m_bodiesBuffer.bind();
         m_bodiesBuffer.bufferData(&bodies, sizeof(bodies), GL_DYNAMIC_DRAW);
         m_bodiesBuffer.bindBase(0);
-
-        m_bodiesBuffer.unbind();
     }
 
     Body& World::CreateBody()
