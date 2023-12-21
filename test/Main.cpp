@@ -4,6 +4,13 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
+#ifdef PHABA_TEST_RUN_OPTIMUS
+extern "C" 
+{
+  __declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+}
+#endif
+
 // This context is required to run tests which involves gl* functions call
 // Need to initialize SDL, create window (can be hidden), GL context, and glew
 // This class is responsible to keep this context until tests stops
