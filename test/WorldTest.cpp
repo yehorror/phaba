@@ -55,3 +55,20 @@ TEST(WorldTest, FreeFallAcceleration_TwoSecondsStep_PositionOfBodyChanged)
 
     EXPECT_EQ(body.GetPosition(), kPositionAfterTwoSeconds);
 }
+
+TEST(WorldTest, FreeFallAcceleration_StaticBody_TwoSecondsStep_PositionOfBodyHasntChanged)
+{
+    constexpr Phaba::TimeDelta kTwoSeconds = 2.f;
+    constexpr Phaba::Vector2 kGAcceleration = { 0.0f, -9.8f };
+
+    Phaba::World world(kGAcceleration);
+
+    auto body = world.CreateBody(Phaba::BodyType::kStatic);
+
+    // Assume we start at {0, 0}
+    ASSERT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));
+
+    world.Step(kTwoSeconds);
+
+    EXPECT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));
+}

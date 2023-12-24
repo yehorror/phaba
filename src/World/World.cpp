@@ -9,10 +9,14 @@ namespace
 
     layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
+    const uint kStaticBodyType = 0x0;
+    const uint kDynamicBodyType = 0x1;
+
     struct Body
     {
         vec2 position;
         vec2 velocity;
+        uint type;
     };
 
     layout(std430, binding = 0) buffer Bodies
@@ -27,6 +31,11 @@ namespace
     {
         for (int i = 0; i < bodiesNum; ++i)
         {
+            if (bodies[i].type == kStaticBodyType)
+            {
+                continue;
+            }
+
             vec2 originalVelocity = bodies[i].velocity;
             bodies[i].velocity += freeFallAcceleration * timeDelta;
 
@@ -44,6 +53,7 @@ namespace
     {
         Phaba::Vector2 position;
         Phaba::Vector2 velocity;
+        Phaba::BodyType type;
     };
 
     struct Bodies
@@ -82,14 +92,16 @@ namespace Phaba
         m_bodiesBuffer.bindBase(0);
     }
 
-    Body& World::CreateBody()
+    Body World::CreateBody(Phaba::BodyType type)
     {
         auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
         auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
 
         const auto index = bodies->bodiesNum++;
 
-        return m_bodiesVec.emplace_back(*this, index);
+        bodies->bodies[index].type = type;
+
+        return Body(*this, index);
     }
 
     Vector2 World::GetVelocity(unsigned int index) const

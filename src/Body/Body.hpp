@@ -6,6 +6,12 @@ namespace Phaba
 {
     class World;
 
+    enum class BodyType
+    {
+        kStatic = 0,
+        kDynamic = 1
+    };
+
     class Body
     {
     public:

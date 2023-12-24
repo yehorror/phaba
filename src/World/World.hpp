@@ -14,7 +14,7 @@ namespace Phaba
     public:
         explicit World(Vector2 freeFallAcceleration = {});
 
-        Body& CreateBody();
+        Body CreateBody(Phaba::BodyType type = Phaba::BodyType::kDynamic);
 
         Vector2 GetVelocity(unsigned int index) const;
         Vector2 GetPosition(unsigned int index) const;
@@ -23,7 +23,6 @@ namespace Phaba
 
     private:
         Vector2 m_freeFallAcceleration;
-        std::vector<Body> m_bodiesVec;
 
         GL::Program m_computeProgram;
         GL::Buffer m_bodiesBuffer;
