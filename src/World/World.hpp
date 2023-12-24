@@ -6,9 +6,18 @@
 #include <Buffer/Buffer.hpp>
 #include "Common.hpp"
 #include "Body/Body.hpp"
+#include "Detail/Engine.hpp"
 
 namespace Phaba
 {
+    struct BodyDef
+    {
+        Vector2 position{};
+        float angle{};
+        float density{};
+        BodyType type = BodyType::kDynamic;
+    };
+
     class World
     {
     public:
@@ -16,15 +25,9 @@ namespace Phaba
 
         Body CreateBody(Phaba::BodyType type = Phaba::BodyType::kDynamic);
 
-        Vector2 GetVelocity(unsigned int index) const;
-        Vector2 GetPosition(unsigned int index) const;
-
         void Step(TimeDelta timeDelta);
 
     private:
-        Vector2 m_freeFallAcceleration;
-
-        GL::Program m_computeProgram;
-        GL::Buffer m_bodiesBuffer;
+        Detail::Engine m_engine;
     };
 }
