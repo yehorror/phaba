@@ -3,6 +3,7 @@
 #include <span>
 #include <glm/vec2.hpp>
 #include <GL/glew.h>
+#include <Buffer/Buffer.hpp>
 
 namespace Playground
 {
@@ -23,7 +24,7 @@ namespace Playground
 
     private:
         GLuint m_vertexArrayID{};
-        GLuint m_vertexBuffer{};
+        GL::Buffer m_vertexBuffer{GL_ARRAY_BUFFER};
         GLuint m_elementBuffer{};
         size_t m_elementsNum{};
     };

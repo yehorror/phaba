@@ -34,12 +34,29 @@ namespace GL
         unbind();
     }
 
+    Buffer::Buffer(Buffer&& rhs)
+        : m_bufferType(rhs.m_bufferType)
+        , m_buffer(rhs.m_buffer)
+    {
+        rhs.m_buffer = 0;
+    }
+
+    Buffer& Buffer::operator = (Buffer&& rhs)
+    {
+        m_buffer = rhs.m_buffer;
+        m_bufferType = rhs.m_bufferType;
+
+        rhs.m_buffer = 0;
+
+        return *this;
+    }
+
     void Buffer::bind() const
     {
         glBindBuffer(m_bufferType, m_buffer);
     }
 
-    void Buffer::bufferData(void* ptr, size_t size, GLenum type)
+    void Buffer::bufferData(const void* ptr, size_t size, GLenum type)
     {
         glNamedBufferData(m_buffer, size, ptr, type);
     }

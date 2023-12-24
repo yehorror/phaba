@@ -11,6 +11,6 @@ find_package(glew)
 find_package(glm)
 
 target_include_directories(phaba-playground PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(phaba-playground PRIVATE SDL2::SDL2-static GLEW::GLEW glm::glm)
+target_link_libraries(phaba-playground PRIVATE SDL2::SDL2-static GLEW::GLEW glm::glm phaba-gl)
 
 add_subdirectory(Misc)

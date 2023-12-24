@@ -23,8 +23,11 @@ namespace GL
     public:
         explicit Buffer(GLenum bufferType);
 
+        Buffer(Buffer&& rhs);
+        Buffer& operator = (Buffer&& rhs);
+
         void bind() const;
-        void bufferData(void* ptr, size_t size, GLenum type);
+        void bufferData(const void* ptr, size_t size, GLenum type);
         void bindBase(unsigned int ID) const;
 
         void unbind() const;
@@ -35,6 +38,6 @@ namespace GL
 
     private:
         GLuint m_buffer{};
-        const GLenum m_bufferType;
+        GLenum m_bufferType;
     };
 }
