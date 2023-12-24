@@ -38,19 +38,16 @@ namespace Playground
 
         const auto indices = GenerateIndices(vertices.size());
 
-        glGenBuffers(1, &m_elementBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+        m_elementBuffer.bufferData(indices.data(), indices.size() * sizeof(GLuint), GL_STATIC_DRAW);
     }
 
     Shape::Shape(Shape&& rhs)
         : m_vertexArrayID(rhs.m_vertexArrayID)
         , m_vertexBuffer(std::move(rhs.m_vertexBuffer))
-        , m_elementBuffer(rhs.m_elementBuffer)
+        , m_elementBuffer(std::move(rhs.m_elementBuffer))
         , m_elementsNum(rhs.m_elementsNum)
     {
         rhs.m_vertexArrayID = 0;
-        rhs.m_elementBuffer = 0;
         rhs.m_elementsNum = 0;
     }
 
@@ -58,11 +55,10 @@ namespace Playground
     {
         m_vertexArrayID = rhs.m_vertexArrayID;
         m_vertexBuffer = std::move(rhs.m_vertexBuffer);
-        m_elementBuffer = rhs.m_elementBuffer;
+        m_elementBuffer = std::move(rhs.m_elementBuffer);
         m_elementsNum = rhs.m_elementsNum;
 
         rhs.m_vertexArrayID = 0;
-        rhs.m_elementBuffer = 0;
         rhs.m_elementsNum = 0;
 
         return *this;
@@ -74,11 +70,6 @@ namespace Playground
         {
             glDeleteVertexArrays(1, &m_vertexArrayID);
         }
-
-        if (m_elementBuffer)
-        {
-            glDeleteBuffers(1, &m_elementBuffer);
-        }
     }
 
     void Shape::Bind(GLuint attributeIndex) const
@@ -86,7 +77,7 @@ namespace Playground
         glEnableVertexAttribArray(attributeIndex);
 
         m_vertexBuffer.bind();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer);
+        m_elementBuffer.bind();
 
         glVertexAttribPointer(
             attributeIndex,

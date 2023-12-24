@@ -25,7 +25,7 @@ namespace Playground
     private:
         GLuint m_vertexArrayID{};
         GL::Buffer m_vertexBuffer{GL_ARRAY_BUFFER};
-        GLuint m_elementBuffer{};
+        GL::Buffer m_elementBuffer{ GL_ELEMENT_ARRAY_BUFFER };
         size_t m_elementsNum{};
     };
 }
