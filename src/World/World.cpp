@@ -9,9 +9,9 @@ namespace Phaba
     {
     }
 
-    Body World::CreateBody(Phaba::BodyType type)
+    Body World::CreateBody(const BodyDef& def)
     {
-        return m_engine.CreateBody(type);
+        return m_engine.CreateBody(def);
     }
 
     void World::Step(TimeDelta timeDelta)

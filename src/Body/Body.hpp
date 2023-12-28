@@ -15,6 +15,14 @@ namespace Phaba
         kDynamic = 1
     };
 
+    struct BodyDef
+    {
+        Vector2 position{};
+        float angle{};
+        float density{};
+        BodyType type = BodyType::kDynamic;
+    };
+
     class Body
     {
     public:

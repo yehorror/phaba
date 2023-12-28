@@ -90,14 +90,14 @@ namespace Phaba::Detail
         m_bodiesBuffer.bindBase(0);
     }
 
-    Body Engine::CreateBody(Phaba::BodyType type)
+    Body Engine::CreateBody(const BodyDef& def)
     {
         auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
         auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
 
         const auto index = bodies->bodiesNum++;
 
-        bodies->bodies[index].type = type;
+        bodies->bodies[index].type = def.type;
 
         return Body(*this, index);
     }

@@ -10,20 +10,12 @@
 
 namespace Phaba
 {
-    struct BodyDef
-    {
-        Vector2 position{};
-        float angle{};
-        float density{};
-        BodyType type = BodyType::kDynamic;
-    };
-
     class World
     {
     public:
         explicit World(Vector2 freeFallAcceleration = {});
 
-        Body CreateBody(Phaba::BodyType type = Phaba::BodyType::kDynamic);
+        Body CreateBody(const BodyDef& def);
 
         void Step(TimeDelta timeDelta);
 

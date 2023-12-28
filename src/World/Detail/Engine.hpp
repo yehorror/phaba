@@ -12,7 +12,7 @@ namespace Phaba::Detail
     public:
         explicit Engine(Vector2 freeFallAcceleration);
 
-        Body CreateBody(Phaba::BodyType type);
+        Body CreateBody(const BodyDef& def);
 
         Vector2 GetVelocity(unsigned int index) const;
         Vector2 GetPosition(unsigned int index) const;
