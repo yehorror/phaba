@@ -6,10 +6,10 @@
 
 namespace Playground
 {
-    class Scene
+    class GenericScene
     {
     public:
-        Scene();
+        GenericScene();
 
         void AddObject(const Object& object);
 

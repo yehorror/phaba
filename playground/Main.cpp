@@ -3,7 +3,7 @@
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Colors/Colors.hpp"
 #include "Loader/Loader.hpp"
-#include "Scene/Scene.hpp"
+#include "GenericScene/GenericScene.hpp"
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
 
         Playground::Loader loader;
 
-        Playground::Scene scene = loader.LoadScene("Misc/scenes/level1");
+        Playground::GenericScene scene = loader.LoadScene("Misc/scenes/level1");
 
         float scale = 0.1;
 

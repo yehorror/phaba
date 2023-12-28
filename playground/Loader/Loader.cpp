@@ -3,9 +3,9 @@
 
 namespace Playground
 {
-    Scene Loader::LoadScene(std::filesystem::path path)
+    GenericScene Loader::LoadScene(std::filesystem::path path)
     {
-        Playground::Scene scene;
+        Playground::GenericScene scene;
 
         std::ifstream input(path);
         if (!input.is_open())

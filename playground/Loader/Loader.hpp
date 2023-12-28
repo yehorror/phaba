@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <filesystem>
-#include "Scene/Scene.hpp"
+#include "GenericScene/GenericScene.hpp"
 #include "Storage/Storage.hpp"
 
 namespace Playground
@@ -10,7 +10,7 @@ namespace Playground
     class Loader
     {
     public:
-        Scene LoadScene(std::filesystem::path path);
+        GenericScene LoadScene(std::filesystem::path path);
 
     private:
         Object LoadObject(std::filesystem::path path);

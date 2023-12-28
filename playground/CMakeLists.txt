@@ -4,7 +4,7 @@ project(phaba-playground LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(phaba-playground Main.cpp "Application/Application.cpp" "Renderer/Renderer.cpp" "Renderer/Shaders/Shaders.h" "Shape/Shape.cpp" "Renderer/Colors/Colors.hpp" "Renderer/Colors/Colors.cpp"  "Loader/Loader.cpp" "Scene/Scene.cpp" "Object/Object.hpp" "Loader/Storage/Storage.cpp")
+add_executable(phaba-playground Main.cpp "Application/Application.cpp" "Renderer/Renderer.cpp" "Renderer/Shaders/Shaders.h" "Shape/Shape.cpp" "Renderer/Colors/Colors.hpp" "Renderer/Colors/Colors.cpp"  "Loader/Loader.cpp" "GenericScene/GenericScene.cpp" "Object/Object.hpp" "Loader/Storage/Storage.cpp")
 
 find_package(SDL2)
 find_package(glew)
