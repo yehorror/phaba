@@ -1,5 +1,4 @@
 #include "GenericScene.hpp"
-#include "Loader/Loader.hpp"
 
 namespace Playground
 {

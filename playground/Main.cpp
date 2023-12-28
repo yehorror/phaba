@@ -2,8 +2,8 @@
 #include "Application/Application.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Colors/Colors.hpp"
-#include "Loader/Loader.hpp"
 #include "GenericScene/GenericScene.hpp"
+#include "Scenes/Demo1/Demo1.hpp"
 
 int main()
 {
@@ -12,9 +12,7 @@ int main()
         Playground::Application application;
         Playground::Renderer renderer;
 
-        Playground::Loader loader;
-
-        Playground::GenericScene scene = loader.LoadScene("Misc/scenes/level1");
+        std::unique_ptr<Playground::GenericScene> scene = std::make_unique<Playground::Demo1>();
 
         float scale = 0.1;
 
@@ -47,7 +45,7 @@ int main()
 
             renderer.SetScale(scale);
 
-            scene.Render(renderer);
+            scene->Render(renderer);
 
             SDL_Delay(16);
         }

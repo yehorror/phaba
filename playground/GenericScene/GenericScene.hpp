@@ -11,9 +11,17 @@ namespace Playground
     public:
         GenericScene();
 
+        void Render(Renderer& renderer);
+
+    protected:
+        
         void AddObject(const Object& object);
 
-        void Render(Renderer& renderer);
+    private:
+
+        virtual void OnRender() {}
+
+        virtual void OnInput() {} // TODO
 
     private:
         Playground::Colors m_whiteColors;
