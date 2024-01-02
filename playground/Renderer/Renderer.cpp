@@ -106,12 +106,6 @@ namespace Playground
 
         colors.Bind(1);
         shape.Draw();
-
-        //glDisableVertexAttribArray(1);
-        //glDisableVertexAttribArray(0);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     void Renderer::SetScale(float scale)
