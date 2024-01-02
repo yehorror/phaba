@@ -1,6 +1,7 @@
 #pragma once
 
 #include <span>
+#include <vector>
 #include <glm/vec2.hpp>
 #include <GL/glew.h>
 #include <Buffer/Buffer.hpp>
@@ -13,7 +14,7 @@ namespace Playground
         explicit Shape(const std::span<const glm::vec2> vertices);
 
         Shape() = default;
-        Shape(Shape&& rhs);
+        Shape(Shape&& rhs) noexcept;
         Shape& operator= (Shape&& rhs) noexcept;
 
         ~Shape();
@@ -21,6 +22,7 @@ namespace Playground
     public:
         void Bind(GLuint attributeIndex) const;
         void Draw() const;
+        std::vector<glm::vec2> GetVertices() const;
 
     private:
         GLuint m_vertexArrayID{};

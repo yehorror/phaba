@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "Application/Application.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Colors/Colors.hpp"
@@ -15,6 +16,8 @@ int main()
         std::unique_ptr<Playground::GenericScene> scene = std::make_unique<Playground::Demo1>();
 
         float scale = 0.1;
+
+        auto previousTimePoint = std::chrono::system_clock::now();
 
         bool works = true;
         while (works)
@@ -45,6 +48,16 @@ int main()
 
             renderer.SetScale(scale);
 
+            auto currentTimePoint = std::chrono::system_clock::now();
+
+            const auto millisecondsPassed = 
+                std::chrono::duration_cast<std::chrono::milliseconds>(currentTimePoint - previousTimePoint).count();
+
+            previousTimePoint = currentTimePoint;
+
+            float deltaTime = millisecondsPassed / 1'000.f;
+
+            scene->Step(deltaTime);
             scene->Render(renderer);
 
             SDL_Delay(16);

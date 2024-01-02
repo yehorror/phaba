@@ -25,11 +25,7 @@ namespace Playground
         : m_boxShape(g_boxVertices)
         , m_floorShape(g_floorVertices)
     {
-        AddObject({ .shape = m_boxShape, .position = {0.f, 5.f}, .angle = 0.f });
-        AddObject({ .shape = m_floorShape, .position = {0.f, -5.f}, .angle = 0.f });
-    }
-
-    void Demo1::OnRender()
-    {
+        AddObject({ .shape = m_boxShape, .position = {0.f, 5.f}, .angle = 0.f, .type = Phaba::BodyType::kDynamic});
+        AddObject({ .shape = m_floorShape, .position = {0.f, -5.f}, .angle = 0.f, .type = Phaba::BodyType::kStatic});
     }
 }

@@ -98,6 +98,7 @@ namespace Phaba::Detail
         const auto index = bodies->bodiesNum++;
 
         bodies->bodies[index].type = def.type;
+        bodies->bodies[index].position = def.position;
 
         return Body(*this, index);
     }
@@ -127,9 +128,11 @@ namespace Phaba::Detail
             bodies->timeDelta = time;
         }
 
+        m_bodiesBuffer.bind();
         m_computeProgram.use();
 
         glDispatchCompute(1, 1, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+        m_bodiesBuffer.unbind();
     }
 }

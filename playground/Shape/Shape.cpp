@@ -41,7 +41,7 @@ namespace Playground
         m_elementBuffer.bufferData(indices.data(), indices.size() * sizeof(GLuint), GL_STATIC_DRAW);
     }
 
-    Shape::Shape(Shape&& rhs)
+    Shape::Shape(Shape&& rhs) noexcept
         : m_vertexArrayID(rhs.m_vertexArrayID)
         , m_vertexBuffer(std::move(rhs.m_vertexBuffer))
         , m_elementBuffer(std::move(rhs.m_elementBuffer))
@@ -75,6 +75,7 @@ namespace Playground
     void Shape::Bind(GLuint attributeIndex) const
     {
         glEnableVertexAttribArray(attributeIndex);
+        glBindVertexArray(m_vertexArrayID);
 
         m_vertexBuffer.bind();
         m_elementBuffer.bind();
@@ -98,5 +99,15 @@ namespace Playground
             GL_UNSIGNED_INT,    // type
             (void*)0            // element array buffer offset
         );
+    }
+
+    std::vector<glm::vec2> Shape::GetVertices() const
+    {
+        auto memory = m_vertexBuffer.mapMemory(GL_READ_ONLY);
+
+        auto begin = reinterpret_cast<glm::vec2*>(memory.get());
+        auto end = begin + (m_elementsNum / 3 + 2);
+
+        return std::vector<glm::vec2>(begin, end);
     }
 }

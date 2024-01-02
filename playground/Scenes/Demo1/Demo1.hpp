@@ -10,9 +10,6 @@ namespace Playground
         Demo1();
 
     private:
-        void OnRender() override;
-
-    private:
         Shape m_boxShape;
         Shape m_floorShape;
     };

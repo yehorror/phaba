@@ -87,6 +87,8 @@ namespace Playground
 
     void Renderer::Draw(const Shape& shape, const Colors& colors, float angle, glm::vec2 pos)
     {
+        glUseProgram(m_programID);
+
         shape.Bind(0);
 
         UBO uboData{};
@@ -105,7 +107,11 @@ namespace Playground
         colors.Bind(1);
         shape.Draw();
 
-        glDisableVertexAttribArray(0);
+        //glDisableVertexAttribArray(1);
+        //glDisableVertexAttribArray(0);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     void Renderer::SetScale(float scale)

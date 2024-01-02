@@ -11,9 +11,31 @@ namespace Playground
         m_whiteColors = Playground::Colors(s_whiteBox);
     }
 
-    void GenericScene::AddObject(const Object& object)
+    void GenericScene::AddObject(const ObjectDef& object)
     {
-        m_objects.emplace_back(object);
+        m_objects.emplace_back(
+            Object
+            {
+                .physicalBody = m_world.CreateBody(
+                    Phaba::BodyDef{
+                        .position = object.position,
+                        .angle = object.angle,
+                        .type = object.type
+                    }),
+                .shape = object.shape,
+                .position = object.position,
+                .angle = object.angle
+            });
+    }
+
+    void GenericScene::Step(float dt)
+    {
+        m_world.Step(dt);
+        
+        for (auto& object : m_objects)
+        {
+            object.position = object.physicalBody.GetPosition();
+        }
     }
 
     void GenericScene::Render(Renderer& renderer)
