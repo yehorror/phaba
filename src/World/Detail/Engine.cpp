@@ -80,6 +80,7 @@ namespace Phaba::Detail
     Engine::Engine(Vector2 freeFallAcceleration)
         : m_computeProgram(CreateComputeShader())
         , m_bodiesBuffer(GL_SHADER_STORAGE_BUFFER)
+        , m_bodiesParts(GL_SHADER_STORAGE_BUFFER)
     {
         // Initialize world with 0 bodies
         Bodies bodies{};
@@ -101,6 +102,11 @@ namespace Phaba::Detail
         bodies->bodies[index].position = def.position;
 
         return Body(*this, index);
+    }
+
+    BodyPart Engine::CreateBodyPart(std::span<Vector2> vertices)
+    {
+        return BodyPart();
     }
 
     Vector2 Engine::GetVelocity(unsigned int index) const
