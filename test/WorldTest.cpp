@@ -73,6 +73,7 @@ TEST(WorldTest, FreeFallAcceleration_StaticBody_TwoSecondsStep_PositionOfBodyHas
     EXPECT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));
 }
 
+/*
 TEST(WorldTest, FreeFallAcceleration_SceneHasFloorAndABox_BoxBouncesOffOfTheFloor)
 {
     /*
@@ -81,7 +82,7 @@ TEST(WorldTest, FreeFallAcceleration_SceneHasFloorAndABox_BoxBouncesOffOfTheFloo
 
         ***********************
 
-    */
+    *//*
     constexpr Phaba::TimeDelta k100ms = 0.100f;
     constexpr Phaba::Vector2 kGAcceleration = { 0.0f, -2.f };
 
@@ -127,3 +128,4 @@ TEST(WorldTest, FreeFallAcceleration_SceneHasFloorAndABox_BoxBouncesOffOfTheFloo
     const auto velocityAfterFall = box.GetVelocity();
     EXPECT_GT(velocityAfterFall.y, 0.f);
 }
+*/

@@ -3,9 +3,10 @@
 
 namespace Phaba
 {
-    BodyPart::BodyPart(Detail::Engine& engine, unsigned int index)
+    BodyPart::BodyPart(Detail::Engine& engine, unsigned int startIndex, unsigned int endIndex)
         : m_engine(engine)
-        , m_index(index)
+        , m_startIndex(startIndex)
+        , m_endIndex(endIndex)
     {
     }
 }

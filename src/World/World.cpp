@@ -14,10 +14,12 @@ namespace Phaba
         return m_engine.CreateBody(def);
     }
 
+    /*
     BodyPart World::CreateBodyPart(std::span<Vector2> vertices)
     {
         return m_engine.CreateBodyPart(vertices);
     }
+    */
 
     void World::Step(TimeDelta timeDelta)
     {

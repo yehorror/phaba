@@ -103,11 +103,12 @@ namespace Phaba::Detail
 
         return Body(*this, index);
     }
-
+    /*
     BodyPart Engine::CreateBodyPart(std::span<Vector2> vertices)
     {
-        return BodyPart();
+        return BodyPart(*this, );
     }
+    */
 
     Vector2 Engine::GetVelocity(unsigned int index) const
     {

@@ -19,7 +19,7 @@ namespace Phaba
 
         Body CreateBody(const BodyDef& def);
 
-        BodyPart CreateBodyPart(std::span<Vector2> vertices);
+        // BodyPart CreateBodyPart(std::span<Vector2> vertices);
 
         void Step(TimeDelta timeDelta);
 

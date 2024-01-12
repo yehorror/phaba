@@ -10,10 +10,11 @@ namespace Phaba
     class BodyPart
     {
     public:
-        BodyPart(Detail::Engine& engine, unsigned int index);
+        BodyPart(Detail::Engine& engine, unsigned int startIndex, unsigned int endIndex);
 
     private:
         Detail::Engine& m_engine;
-        const unsigned int m_index;
+        const unsigned int m_startIndex;
+        const unsigned int m_endIndex;
     };
 }
