@@ -6,6 +6,7 @@
 #include "Buffer/Buffer.hpp"
 #include "Body/Body.hpp"
 #include "BodyPart/BodyPart.hpp"
+#include "Bodies/Bodies.hpp"
 
 namespace Phaba::Detail
 {
@@ -24,7 +25,7 @@ namespace Phaba::Detail
 
     private:
         GL::Program m_computeProgram;
-        GL::Buffer m_bodiesBuffer;
+        Bodies m_bodies;
         GL::Buffer m_bodiesParts;
     };
 }

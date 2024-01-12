@@ -55,7 +55,7 @@ namespace
         Phaba::BodyType type;
     };
 
-    struct Bodies
+    struct BodiesStruct
     {
         int bodiesNum;
         float timeDelta;
@@ -79,22 +79,21 @@ namespace Phaba::Detail
 {
     Engine::Engine(Vector2 freeFallAcceleration)
         : m_computeProgram(CreateComputeShader())
-        , m_bodiesBuffer(GL_SHADER_STORAGE_BUFFER)
         , m_bodiesParts(GL_SHADER_STORAGE_BUFFER)
     {
         // Initialize world with 0 bodies
-        Bodies bodies{};
+        BodiesStruct bodies{};
 
         bodies.freeFallAcceleration = freeFallAcceleration;
 
-        m_bodiesBuffer.bufferData(&bodies, sizeof(bodies), GL_DYNAMIC_DRAW);
-        m_bodiesBuffer.bindBase(0);
+        m_bodies.m_bodiesBuffer.bufferData(&bodies, sizeof(bodies), GL_DYNAMIC_DRAW);
+        m_bodies.m_bodiesBuffer.bindBase(0);
     }
 
     Body Engine::CreateBody(const BodyDef& def)
     {
-        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
-        auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
+        auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_READ_WRITE);
+        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
 
         const auto index = bodies->bodiesNum++;
 
@@ -112,16 +111,16 @@ namespace Phaba::Detail
 
     Vector2 Engine::GetVelocity(unsigned int index) const
     {
-        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
-        auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
+        auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_READ_ONLY);
+        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
 
         return bodies->bodies[index].velocity;
     }
 
     Vector2 Engine::GetPosition(unsigned int index) const
     {
-        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
-        auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
+        auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_READ_ONLY);
+        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
 
         return bodies->bodies[index].position;
     }
@@ -129,17 +128,17 @@ namespace Phaba::Detail
     void Engine::Step(TimeDelta time)
     {
         {
-            auto mappedMemory = m_bodiesBuffer.mapMemory(GL_WRITE_ONLY);
+            auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_WRITE_ONLY);
 
-            auto bodies = reinterpret_cast<Bodies*>(mappedMemory.get());
+            auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
             bodies->timeDelta = time;
         }
 
-        m_bodiesBuffer.bind();
+        m_bodies.m_bodiesBuffer.bind();
         m_computeProgram.use();
 
         glDispatchCompute(1, 1, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-        m_bodiesBuffer.unbind();
+        m_bodies.m_bodiesBuffer.unbind();
     }
 }
