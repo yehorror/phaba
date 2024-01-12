@@ -48,7 +48,7 @@ namespace
 
     constexpr size_t kBodiesPreAllocate = 5;
 
-    struct Body
+    struct BodyStruct
     {
         Phaba::Vector2 position;
         Phaba::Vector2 velocity;
@@ -60,7 +60,7 @@ namespace
         int bodiesNum;
         float timeDelta;
         Phaba::Vector2 freeFallAcceleration;
-        Body bodies[kBodiesPreAllocate];
+        BodyStruct bodies[kBodiesPreAllocate];
     };
 
     GL::Program CreateComputeShader()
