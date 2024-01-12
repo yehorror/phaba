@@ -46,23 +46,6 @@ namespace
 
     )compute";
 
-    constexpr size_t kBodiesPreAllocate = 5;
-
-    struct BodyStruct
-    {
-        Phaba::Vector2 position;
-        Phaba::Vector2 velocity;
-        Phaba::BodyType type;
-    };
-
-    struct BodiesStruct
-    {
-        int bodiesNum;
-        float timeDelta;
-        Phaba::Vector2 freeFallAcceleration;
-        BodyStruct bodies[kBodiesPreAllocate];
-    };
-
     GL::Program CreateComputeShader()
     {
         GL::Program program;
