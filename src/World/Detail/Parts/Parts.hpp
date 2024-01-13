@@ -16,5 +16,6 @@ namespace Phaba::Detail
 
     private:
         GL::Buffer m_partsBuffer{ GL_SHADER_STORAGE_BUFFER };
+        unsigned int m_lastIndex = 0;
     };
 }
