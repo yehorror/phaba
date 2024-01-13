@@ -44,7 +44,7 @@ namespace
             bodies[i].velocity += freeFallAcceleration * timeDelta;
 
             // If the speed is variable through the time, the formula is
-            // dx = (v1 + v2) * dt / 2;
+            // dx = (v1 + v2) * dt / 2.f;
             bodies[i].position += (originalVelocity + bodies[i].velocity) * timeDelta / 2.f;
         }
     }
