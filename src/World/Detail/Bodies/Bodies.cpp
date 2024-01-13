@@ -1,5 +1,27 @@
 #include "Bodies.hpp"
 
+namespace
+{
+    constexpr size_t kBodiesPreAllocate = 5;
+
+    // Legal in .cpp :p
+    using namespace Phaba;
+
+    struct BodyStruct
+    {
+        Vector2 position;
+        Vector2 velocity;
+        BodyType type;
+    };
+
+    struct BodiesStruct
+    {
+        int bodiesNum;
+        int pad;
+        BodyStruct bodies[kBodiesPreAllocate];
+    };
+}
+
 namespace Phaba::Detail
 {
     Bodies::Bodies()
