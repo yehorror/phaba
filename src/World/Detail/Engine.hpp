@@ -23,7 +23,7 @@ namespace Phaba::Detail
     private:
         GL::Program m_computeProgram;
         Bodies m_bodies;
-        GL::Buffer m_worldConfig;
-        GL::Buffer m_bodiesParts;
+        GL::Buffer m_worldConfig{ GL_SHADER_STORAGE_BUFFER };
+        GL::Buffer m_bodiesParts{ GL_SHADER_STORAGE_BUFFER };
     };
 }

@@ -9,7 +9,8 @@ add_library(phaba
     "Body/Body.cpp"                     "Body/Body.hpp"
     "World/Detail/Engine.cpp"           "World/Detail/Engine.hpp"
     "BodyPart/BodyPart.cpp"             "BodyPart/BodyPart.hpp"
-    "World/Detail/Bodies/Bodies.cpp"    "World/Detail/Bodies/Bodies.cpp")
+    "World/Detail/Bodies/Bodies.cpp"    "World/Detail/Bodies/Bodies.hpp" 
+    "World/Detail/Parts/Parts.cpp"      "World/Detail/Parts/Parts.hpp" )
 
 find_package(glew)
 find_package(glm)

@@ -72,8 +72,6 @@ namespace Phaba::Detail
 {
     Engine::Engine(Vector2 freeFallAcceleration)
         : m_computeProgram(CreateComputeShader())
-        , m_bodiesParts(GL_SHADER_STORAGE_BUFFER)
-        , m_worldConfig(GL_SHADER_STORAGE_BUFFER)
     {
         WorldConfig config{};
         config.freeFallAcceleration = freeFallAcceleration;
