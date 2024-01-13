@@ -1,21 +1,21 @@
 #include "Body.hpp"
-#include "World/Detail/Engine.hpp"
+#include "World/Detail/Bodies/Bodies.hpp"
 
 namespace Phaba
 {
-    Body::Body(Detail::Engine& engine, unsigned int index)
-        : m_engine(engine)
+    Body::Body(Detail::Bodies& bodies, unsigned int index)
+        : m_bodies(bodies)
         , m_index(index)
     {
     }
 
     Vector2 Body::GetVelocity() const
     {
-        return m_engine.GetVelocity(m_index);
+        return m_bodies.GetVelocity(m_index);
     }
 
     Vector2 Body::GetPosition() const
     {
-        return m_engine.GetPosition(m_index);
+        return m_bodies.GetPosition(m_index);
     }
 }

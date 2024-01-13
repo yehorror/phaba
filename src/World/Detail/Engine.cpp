@@ -78,23 +78,11 @@ namespace Phaba::Detail
         WorldConfig config{};
         config.freeFallAcceleration = freeFallAcceleration;
         m_worldConfig.bufferData(&config, sizeof(config), GL_DYNAMIC_DRAW);
-
-        // Initialize world with 0 bodies
-        BodiesStruct bodies{};
-        m_bodies.m_bodiesBuffer.bufferData(&bodies, sizeof(bodies), GL_DYNAMIC_DRAW);
     }
 
     Body Engine::CreateBody(const BodyDef& def)
     {
-        auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_READ_WRITE);
-        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
-
-        const auto index = bodies->bodiesNum++;
-
-        bodies->bodies[index].type = def.type;
-        bodies->bodies[index].position = def.position;
-
-        return Body(*this, index);
+        return m_bodies.Create(def);
     }
     /*
     BodyPart Engine::CreateBodyPart(std::span<Vector2> vertices)
@@ -102,23 +90,6 @@ namespace Phaba::Detail
         return BodyPart(*this, );
     }
     */
-
-    Vector2 Engine::GetVelocity(unsigned int index) const
-    {
-        auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_READ_ONLY);
-        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
-
-        return bodies->bodies[index].velocity;
-    }
-
-    Vector2 Engine::GetPosition(unsigned int index) const
-    {
-        auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_READ_ONLY);
-        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
-
-        return bodies->bodies[index].position;
-    }
-
     void Engine::Step(TimeDelta time)
     {
         {
@@ -130,11 +101,10 @@ namespace Phaba::Detail
         }
 
         m_worldConfig.bindBase(0);
-        m_bodies.m_bodiesBuffer.bindBase(1);
+        m_bodies.Bind();
         m_computeProgram.use();
 
         glDispatchCompute(1, 1, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-        m_bodies.m_bodiesBuffer.unbind();
     }
 }

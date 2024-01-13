@@ -18,9 +18,6 @@ namespace Phaba::Detail
         Body CreateBody(const BodyDef& def);
         // BodyPart CreateBodyPart(std::span<Vector2> vertices);
 
-        Vector2 GetVelocity(unsigned int index) const;
-        Vector2 GetPosition(unsigned int index) const;
-
         void Step(TimeDelta time);
 
     private:

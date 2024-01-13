@@ -4,7 +4,12 @@ project(phaba LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(phaba "World/World.cpp" "World/World.hpp" "Body/Body.cpp" "World/Detail/Engine.cpp" "BodyPart/BodyPart.cpp" "World/Detail/Bodies/Bodies.cpp")
+add_library(phaba 
+    "World/World.cpp"                   "World/World.hpp"
+    "Body/Body.cpp"                     "Body/Body.hpp"
+    "World/Detail/Engine.cpp"           "World/Detail/Engine.hpp"
+    "BodyPart/BodyPart.cpp"             "BodyPart/BodyPart.hpp"
+    "World/Detail/Bodies/Bodies.cpp"    "World/Detail/Bodies/Bodies.cpp")
 
 find_package(glew)
 find_package(glm)

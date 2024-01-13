@@ -6,7 +6,7 @@ namespace Phaba
 {
     namespace Detail
     {
-        class Engine;
+        class Bodies;
     }
 
     enum class BodyType
@@ -26,13 +26,13 @@ namespace Phaba
     class Body
     {
     public:
-        Body(Detail::Engine& engine, unsigned int index);
+        Body(Detail::Bodies& bodies, unsigned int index);
 
         Vector2 GetVelocity() const;
         Vector2 GetPosition() const;
 
     private:
-        Detail::Engine& m_engine;
+        Detail::Bodies& m_bodies;
         const unsigned int m_index;
     };
 }
