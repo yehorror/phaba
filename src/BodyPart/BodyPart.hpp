@@ -4,16 +4,16 @@ namespace Phaba
 {
     namespace Detail
     {
-        class Engine;
+        class Parts;
     }
         
     class BodyPart
     {
     public:
-        BodyPart(Detail::Engine& engine, unsigned int startIndex, unsigned int endIndex);
+        BodyPart(Detail::Parts& parts, unsigned int startIndex, unsigned int endIndex);
 
     private:
-        Detail::Engine& m_engine;
+        Detail::Parts& m_parts;
         const unsigned int m_startIndex;
         const unsigned int m_endIndex;
     };

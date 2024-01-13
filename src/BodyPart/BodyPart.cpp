@@ -1,10 +1,10 @@
 #include "BodyPart.hpp"
-#include "World/Detail/Engine.hpp"
+#include "World/Detail/Parts/Parts.hpp"
 
 namespace Phaba
 {
-    BodyPart::BodyPart(Detail::Engine& engine, unsigned int startIndex, unsigned int endIndex)
-        : m_engine(engine)
+    BodyPart::BodyPart(Detail::Parts& parts, unsigned int startIndex, unsigned int endIndex)
+        : m_parts(parts)
         , m_startIndex(startIndex)
         , m_endIndex(endIndex)
     {
