@@ -18,11 +18,16 @@ namespace
         uint type;
     };
 
-    layout(std430, binding = 0) buffer Bodies
+    layout(std430, binding = 0) buffer WorldConfig
+    {
+        vec2 freeFallAcceleration;
+        float timeDelta;
+    };
+
+    layout(std430, binding = 1) buffer Bodies
     {
         int bodiesNum;
-        float timeDelta;
-        vec2 freeFallAcceleration;
+        int pad;
         Body bodies[];
     };
 
@@ -43,8 +48,13 @@ namespace
             bodies[i].position += (originalVelocity + bodies[i].velocity) * timeDelta / 2.f;
         }
     }
-
     )compute";
+
+    struct WorldConfig
+    {
+        Phaba::Vector2 freeFallAcceleration;
+        float timeDelta;
+    };
 
     GL::Program CreateComputeShader()
     {
@@ -63,14 +73,15 @@ namespace Phaba::Detail
     Engine::Engine(Vector2 freeFallAcceleration)
         : m_computeProgram(CreateComputeShader())
         , m_bodiesParts(GL_SHADER_STORAGE_BUFFER)
+        , m_worldConfig(GL_SHADER_STORAGE_BUFFER)
     {
+        WorldConfig config{};
+        config.freeFallAcceleration = freeFallAcceleration;
+        m_worldConfig.bufferData(&config, sizeof(config), GL_DYNAMIC_DRAW);
+
         // Initialize world with 0 bodies
         BodiesStruct bodies{};
-
-        bodies.freeFallAcceleration = freeFallAcceleration;
-
         m_bodies.m_bodiesBuffer.bufferData(&bodies, sizeof(bodies), GL_DYNAMIC_DRAW);
-        m_bodies.m_bodiesBuffer.bindBase(0);
     }
 
     Body Engine::CreateBody(const BodyDef& def)
@@ -111,13 +122,15 @@ namespace Phaba::Detail
     void Engine::Step(TimeDelta time)
     {
         {
-            auto mappedMemory = m_bodies.m_bodiesBuffer.mapMemory(GL_WRITE_ONLY);
+            auto mappedMemory = m_worldConfig.mapMemory(GL_READ_WRITE);
 
-            auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
-            bodies->timeDelta = time;
+            auto worldConfig = reinterpret_cast<WorldConfig*>(mappedMemory.get());
+
+            worldConfig->timeDelta = time;
         }
 
-        m_bodies.m_bodiesBuffer.bind();
+        m_worldConfig.bindBase(0);
+        m_bodies.m_bodiesBuffer.bindBase(1);
         m_computeProgram.use();
 
         glDispatchCompute(1, 1, 1);

@@ -18,8 +18,7 @@ namespace Phaba::Detail
     struct BodiesStruct
     {
         int bodiesNum;
-        float timeDelta;
-        Phaba::Vector2 freeFallAcceleration;
+        int pad;
         BodyStruct bodies[kBodiesPreAllocate];
     };
 
