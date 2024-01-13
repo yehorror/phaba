@@ -34,7 +34,7 @@ namespace Phaba::Detail
     Body Bodies::Create(const BodyDef& def)
     {
         auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_WRITE);
-        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
+        auto bodies = mappedMemory.get<BodiesStruct>();
 
         const auto index = bodies->bodiesNum++;
 
@@ -47,7 +47,7 @@ namespace Phaba::Detail
     Vector2 Bodies::GetVelocity(unsigned int index)
     {
         auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
-        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
+        auto bodies = mappedMemory.get<BodiesStruct>();
 
         return bodies->bodies[index].velocity;
     }
@@ -55,7 +55,7 @@ namespace Phaba::Detail
     Vector2 Bodies::GetPosition(unsigned int index)
     {
         auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
-        auto bodies = reinterpret_cast<BodiesStruct*>(mappedMemory.get());
+        auto bodies = mappedMemory.get<BodiesStruct>();
 
         return bodies->bodies[index].position;
     }

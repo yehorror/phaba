@@ -93,7 +93,7 @@ namespace Phaba::Detail
         {
             auto mappedMemory = m_worldConfig.mapMemory(GL_READ_WRITE);
 
-            auto worldConfig = reinterpret_cast<WorldConfig*>(mappedMemory.get());
+            auto worldConfig = mappedMemory.get<WorldConfig>();
 
             worldConfig->timeDelta = time;
         }

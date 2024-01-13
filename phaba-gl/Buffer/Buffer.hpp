@@ -10,8 +10,17 @@ namespace GL
         MappedMemoryGuard(void* ptr, GLuint buffer);
         ~MappedMemoryGuard();
 
-        void* get();
         operator void* ();
+
+    public:
+        template<typename StructType>
+        StructType* get()
+        {
+            return static_cast<StructType*>(get());
+        }
+
+    private:
+        void* get();
 
     private:
         void* m_ptr;

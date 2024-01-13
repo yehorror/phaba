@@ -7,6 +7,7 @@
 #include "Body/Body.hpp"
 #include "BodyPart/BodyPart.hpp"
 #include "Bodies/Bodies.hpp"
+#include "Parts/Parts.hpp"
 
 namespace Phaba::Detail
 {
@@ -22,8 +23,8 @@ namespace Phaba::Detail
 
     private:
         GL::Program m_computeProgram;
-        Bodies m_bodies;
         GL::Buffer m_worldConfig{ GL_SHADER_STORAGE_BUFFER };
-        GL::Buffer m_bodiesParts{ GL_SHADER_STORAGE_BUFFER };
+        Bodies m_bodies;
+        Parts m_bodiesParts;
     };
 }
