@@ -9,9 +9,9 @@ namespace Phaba
     {
     }
 
-    Body World::CreateBody(const BodyDef& def)
+    BodyBuilder World::MakeBodyBuilder()
     {
-        return m_engine.CreateBody(def);
+        return BodyBuilder(m_engine);
     }
 
     /*

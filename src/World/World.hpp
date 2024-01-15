@@ -9,6 +9,7 @@
 #include "Body/Body.hpp"
 #include "BodyPart/BodyPart.hpp"
 #include "Detail/Engine.hpp"
+#include "BodyBuilder/BodyBuilder.hpp"
 
 namespace Phaba
 {
@@ -17,7 +18,7 @@ namespace Phaba
     public:
         explicit World(Vector2 freeFallAcceleration = {});
 
-        Body CreateBody(const BodyDef& def);
+        BodyBuilder MakeBodyBuilder();
 
         // BodyPart CreateBodyPart(std::span<Vector2> vertices);
 
