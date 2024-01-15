@@ -6,15 +6,22 @@ namespace Phaba
     {
         class Parts;
     }
-        
+
+    struct VerticesIndices
+    {
+        unsigned int start;
+        unsigned int end;
+    };
+
     class BodyPart
     {
     public:
         BodyPart(Detail::Parts& parts, unsigned int startIndex, unsigned int endIndex);
 
+        VerticesIndices GetVerticesIndices() const;
+
     private:
         Detail::Parts& m_parts;
-        const unsigned int m_startIndex;
-        const unsigned int m_endIndex;
+        const VerticesIndices m_verticesIndices;
     };
 }

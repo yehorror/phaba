@@ -24,14 +24,15 @@ namespace Phaba::Detail
 
     BodyPart Parts::CreatePart(std::span<Vector2> vertices)
     {
+        // TODO memcpy?
         auto mappedMemory = m_partsBuffer.mapMemory(GL_WRITE_ONLY);
-        auto vertices = mappedMemory.get<Vector2>();
+        auto verticesMemory = mappedMemory.get<Vector2>();
 
         const auto startIndex = m_lastIndex;
 
         for (const auto& vertex : vertices)
         {
-            vertices[m_lastIndex] = vertex;
+            verticesMemory[m_lastIndex] = vertex;
             ++m_lastIndex;
         }
 
