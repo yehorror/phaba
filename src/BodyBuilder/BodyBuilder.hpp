@@ -15,9 +15,12 @@ namespace Phaba
     public:
         explicit BodyBuilder(Detail::Engine& engine);
 
-        Body Build(const BodyDef& def);
+        BodyBuilder& Type(BodyType type);
+
+        Body Build();
 
     private:
         Detail::Engine& m_engine;
+        BodyDef m_bodyDef;
     };
 }

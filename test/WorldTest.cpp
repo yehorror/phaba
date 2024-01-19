@@ -23,7 +23,7 @@ TEST(WorldTest, FreeFallAcceleration_OneSecondStep_VelocityOfBodyChanged)
 
     // TODO Actually bodies should be created with some parameters
     // Like mass, parts, etc
-    auto body = world.MakeBodyBuilder().Build({});
+    auto body = world.MakeBodyBuilder().Build();
 
     ASSERT_EQ(body.GetVelocity(), Phaba::Vector2(0.0f, 0.0f));
 
@@ -42,7 +42,7 @@ TEST(WorldTest, FreeFallAcceleration_TwoSecondsStep_PositionOfBodyChanged)
 
     Phaba::World world(kGAcceleration);
 
-    auto body = world.MakeBodyBuilder().Build({});
+    auto body = world.MakeBodyBuilder().Build();
 
     // Assume we start at {0, 0}
     ASSERT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));
@@ -63,7 +63,9 @@ TEST(WorldTest, FreeFallAcceleration_StaticBody_TwoSecondsStep_PositionOfBodyHas
 
     Phaba::World world(kGAcceleration);
 
-    auto body = world.MakeBodyBuilder().Build({ .type = Phaba::BodyType::kStatic });
+    auto body = world.MakeBodyBuilder()
+        .Type(Phaba::BodyType::kStatic)
+        .Build();
 
     // Assume we start at {0, 0}
     ASSERT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));

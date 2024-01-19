@@ -8,8 +8,14 @@ namespace Phaba
     {
     }
 
-    Body BodyBuilder::Build(const BodyDef& def)
+    BodyBuilder& BodyBuilder::Type(BodyType type)
     {
-        return m_engine.CreateBody(def);
+        m_bodyDef.type = type;
+        return *this;
+    }
+
+    Body BodyBuilder::Build()
+    {
+        return m_engine.CreateBody(m_bodyDef);
     }
 }
