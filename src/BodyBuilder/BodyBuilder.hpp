@@ -16,6 +16,7 @@ namespace Phaba
         explicit BodyBuilder(Detail::Engine& engine);
 
         BodyBuilder& Type(BodyType type);
+        BodyBuilder& Position(Vector2 position);
 
         Body Build();
 

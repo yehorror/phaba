@@ -75,6 +75,19 @@ TEST(WorldTest, FreeFallAcceleration_StaticBody_TwoSecondsStep_PositionOfBodyHas
     EXPECT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));
 }
 
+TEST(WorldTest, MakeBodyBuilder_SetInitialPosition_PositionIsSetAfterBodyCreation)
+{
+    constexpr Phaba::Vector2 kInitialPosition = { 1.2f, 3.f };
+
+    Phaba::World world({});
+
+    auto body = world.MakeBodyBuilder()
+        .Position(kInitialPosition)
+        .Build();
+
+    EXPECT_EQ(body.GetPosition(), kInitialPosition);
+}
+
 /*
 TEST(WorldTest, FreeFallAcceleration_SceneHasFloorAndABox_BoxBouncesOffOfTheFloor)
 {
