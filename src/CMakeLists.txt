@@ -13,8 +13,9 @@ add_library(phaba
     "Detail/Parts/Parts.cpp"            "Detail/Parts/Parts.hpp"  
     "BodyBuilder/BodyBuilder.cpp"       "BodyBuilder/BodyBuilder.hpp" 
 
-    "Detail/Parts/Descriptors/PartsDescriptors.cpp" "Detail/Parts/Descriptors/PartsDescriptors.hpp" 
-    "Detail/Parts/Vertices/PartsVertices.cpp"     "Detail/Parts/Vertices/PartsVertices.hpp")
+    "Detail/Parts/Descriptors/PartsDescriptors.cpp"     "Detail/Parts/Descriptors/PartsDescriptors.hpp" 
+    "Detail/Parts/Vertices/PartsVertices.cpp"           "Detail/Parts/Vertices/PartsVertices.hpp" 
+    "Detail/Parts/Indices/PartsVerticesIndices.cpp"     "Detail/Parts/Indices/PartsVerticesIndices.hpp")
 
 find_package(glew)
 find_package(glm)
