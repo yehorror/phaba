@@ -4,6 +4,7 @@
 #include <Buffer/Buffer.hpp>
 #include "Common.hpp"
 #include "BodyPart/BodyPart.hpp"
+#include "Descriptors/PartsDescriptors.hpp"
 
 namespace Phaba::Detail
 {
@@ -13,6 +14,8 @@ namespace Phaba::Detail
         Parts();
 
         BodyPart CreatePart(std::span<const Vector2> vertices);
+
+        // PartDescriptor CreatePartDescriptor();
 
     private:
         GL::Buffer m_partsVertices{ GL_SHADER_STORAGE_BUFFER }; // represents vertices of parts

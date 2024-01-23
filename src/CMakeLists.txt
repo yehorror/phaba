@@ -11,7 +11,10 @@ add_library(phaba
     "BodyPart/BodyPart.cpp"             "BodyPart/BodyPart.hpp"
     "Detail/Bodies/Bodies.cpp"          "Detail/Bodies/Bodies.hpp" 
     "Detail/Parts/Parts.cpp"            "Detail/Parts/Parts.hpp"  
-    "BodyBuilder/BodyBuilder.cpp"       "BodyBuilder/BodyBuilder.hpp")
+    "BodyBuilder/BodyBuilder.cpp"       "BodyBuilder/BodyBuilder.hpp" 
+
+    "Detail/Parts/Descriptors/PartsDescriptors.cpp" "Detail/Parts/Descriptors/PartsDescriptors.hpp" 
+    "Detail/Parts/Vertices/PartsVertices.cpp"     "Detail/Parts/Vertices/PartsVertices.hpp")
 
 find_package(glew)
 find_package(glm)
