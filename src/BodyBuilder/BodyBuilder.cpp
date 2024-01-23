@@ -25,6 +25,12 @@ namespace Phaba
         return *this;
     }
 
+    BodyBuilder& BodyBuilder::Part(BodyPart part)
+    {
+        
+        return *this;
+    }
+
     Body BodyBuilder::Build()
     {
         return m_engine.CreateBody(m_bodyDef);

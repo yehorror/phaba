@@ -14,7 +14,7 @@ namespace Phaba
         return BodyBuilder(m_engine);
     }
 
-    BodyPart World::CreateBodyPart(std::span<Vector2> vertices)
+    BodyPart World::CreateBodyPart(std::span<const Vector2> vertices)
     {
         return m_engine.CreateBodyPart(vertices);
     }

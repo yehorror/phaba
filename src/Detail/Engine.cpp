@@ -84,7 +84,7 @@ namespace Phaba::Detail
         return m_bodies.Create(def);
     }
     
-    BodyPart Engine::CreateBodyPart(std::span<Vector2> vertices)
+    BodyPart Engine::CreateBodyPart(std::span<const Vector2> vertices)
     {
         return m_bodiesParts.CreatePart(vertices);
     }

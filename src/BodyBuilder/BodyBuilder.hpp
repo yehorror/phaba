@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Body/Body.hpp"
+#include "BodyPart/BodyPart.hpp"
 
 namespace Phaba
 {
@@ -18,6 +19,7 @@ namespace Phaba
         BodyBuilder& Type(BodyType type);
         BodyBuilder& Position(Vector2 position);
         BodyBuilder& Angle(float angle);
+        BodyBuilder& Part(BodyPart part);
 
         Body Build();
 

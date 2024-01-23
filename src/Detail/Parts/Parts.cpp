@@ -22,7 +22,7 @@ namespace Phaba::Detail
         m_partsVertices.bufferData(&parts, sizeof(parts), GL_DYNAMIC_DRAW);
     }
 
-    BodyPart Parts::CreatePart(std::span<Vector2> vertices)
+    BodyPart Parts::CreatePart(std::span<const Vector2> vertices)
     {
         // TODO memcpy?
         auto mappedMemory = m_partsVertices.mapMemory(GL_WRITE_ONLY);
