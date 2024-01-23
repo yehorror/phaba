@@ -11,6 +11,7 @@ namespace
     {
         Vector2 position;
         Vector2 velocity;
+        float angle;
         BodyType type;
     };
 
@@ -40,6 +41,7 @@ namespace Phaba::Detail
 
         bodies->bodies[index].type = def.type;
         bodies->bodies[index].position = def.position;
+        bodies->bodies[index].angle = def.angle;
 
         return Body(*this, index);
     }
@@ -58,6 +60,14 @@ namespace Phaba::Detail
         auto bodies = mappedMemory.get<BodiesStruct>();
 
         return bodies->bodies[index].position;
+    }
+
+    float Bodies::GetAngle(unsigned int index)
+    {
+        auto mappedMemory = m_bodiesBuffer.mapMemory(GL_READ_ONLY);
+        auto bodies = mappedMemory.get<BodiesStruct>();
+
+        return bodies->bodies[index].angle;
     }
 
     void Bodies::Bind()

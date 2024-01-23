@@ -30,6 +30,7 @@ namespace Phaba
 
         Vector2 GetVelocity() const;
         Vector2 GetPosition() const;
+        float GetAngle() const;
 
     private:
         Detail::Bodies& m_bodies;

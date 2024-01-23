@@ -15,6 +15,7 @@ namespace
     {
         vec2 position;
         vec2 velocity;
+        float angle;
         uint type;
     };
 

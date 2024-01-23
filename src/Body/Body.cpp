@@ -18,4 +18,9 @@ namespace Phaba
     {
         return m_bodies.GetPosition(m_index);
     }
+
+    float Body::GetAngle() const
+    {
+        return m_bodies.GetAngle(m_index);
+    }
 }

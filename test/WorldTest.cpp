@@ -4,11 +4,6 @@
 
 constexpr float kEpsilon = 0.0001f;
 
-bool operator== (const Phaba::Vector2 lhs, const Phaba::Vector2 rhs)
-{
-    return glm::length(Phaba::Vector2(lhs - rhs)) < kEpsilon;
-}
-
 TEST(WorldTest, WorldCanBeCreated)
 {
     Phaba::World world;
@@ -21,8 +16,6 @@ TEST(WorldTest, FreeFallAcceleration_OneSecondStep_VelocityOfBodyChanged)
 
     Phaba::World world(kGAcceleration);
 
-    // TODO Actually bodies should be created with some parameters
-    // Like mass, parts, etc
     auto body = world.MakeBodyBuilder().Build();
 
     ASSERT_EQ(body.GetVelocity(), Phaba::Vector2(0.0f, 0.0f));
@@ -73,19 +66,6 @@ TEST(WorldTest, FreeFallAcceleration_StaticBody_TwoSecondsStep_PositionOfBodyHas
     world.Step(kTwoSeconds);
 
     EXPECT_EQ(body.GetPosition(), Phaba::Vector2(0.0f, 0.0f));
-}
-
-TEST(WorldTest, MakeBodyBuilder_SetInitialPosition_PositionIsSetAfterBodyCreation)
-{
-    constexpr Phaba::Vector2 kInitialPosition = { 1.2f, 3.f };
-
-    Phaba::World world({});
-
-    auto body = world.MakeBodyBuilder()
-        .Position(kInitialPosition)
-        .Build();
-
-    EXPECT_EQ(body.GetPosition(), kInitialPosition);
 }
 
 /*

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 
 project(phaba-test LANGUAGES CXX)
 
-add_executable(phaba-test Main.cpp "WorldTest.cpp")
+add_executable(phaba-test Main.cpp "WorldTest.cpp" "BodyBuilderTest.cpp")
 
 find_package(GTest REQUIRED)
 find_package(SDL2 REQUIRED)

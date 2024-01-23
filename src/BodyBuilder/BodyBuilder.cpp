@@ -19,6 +19,11 @@ namespace Phaba
         m_bodyDef.position = position;
         return *this;
     }
+    BodyBuilder& BodyBuilder::Angle(float angle)
+    {
+        m_bodyDef.angle = angle;
+        return *this;
+    }
 
     Body BodyBuilder::Build()
     {

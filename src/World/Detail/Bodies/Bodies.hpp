@@ -15,6 +15,7 @@ namespace Phaba::Detail
 
         Vector2 GetVelocity(unsigned int index);
         Vector2 GetPosition(unsigned int index);
+        float GetAngle(unsigned int index);
 
         void Bind();
 

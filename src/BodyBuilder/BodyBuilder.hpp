@@ -17,6 +17,7 @@ namespace Phaba
 
         BodyBuilder& Type(BodyType type);
         BodyBuilder& Position(Vector2 position);
+        BodyBuilder& Angle(float angle);
 
         Body Build();
 
