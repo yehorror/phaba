@@ -7,10 +7,10 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(phaba 
     "World/World.cpp"                   "World/World.hpp"
     "Body/Body.cpp"                     "Body/Body.hpp"
-    "World/Detail/Engine.cpp"           "World/Detail/Engine.hpp"
+    "Detail/Engine.cpp"                 "Detail/Engine.hpp"
     "BodyPart/BodyPart.cpp"             "BodyPart/BodyPart.hpp"
-    "World/Detail/Bodies/Bodies.cpp"    "World/Detail/Bodies/Bodies.hpp" 
-    "World/Detail/Parts/Parts.cpp"      "World/Detail/Parts/Parts.hpp"  
+    "Detail/Bodies/Bodies.cpp"          "Detail/Bodies/Bodies.hpp" 
+    "Detail/Parts/Parts.cpp"            "Detail/Parts/Parts.hpp"  
     "BodyBuilder/BodyBuilder.cpp"       "BodyBuilder/BodyBuilder.hpp")
 
 find_package(glew)

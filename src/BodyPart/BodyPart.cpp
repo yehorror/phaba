@@ -1,5 +1,5 @@
 #include "BodyPart.hpp"
-#include "World/Detail/Parts/Parts.hpp"
+#include "Detail/Parts/Parts.hpp"
 
 namespace Phaba
 {
