@@ -15,7 +15,10 @@ namespace Phaba::Detail
         BodyPart CreatePart(std::span<Vector2> vertices);
 
     private:
-        GL::Buffer m_partsBuffer{ GL_SHADER_STORAGE_BUFFER };
-        unsigned int m_lastIndex = 0;
+        GL::Buffer m_partsVertices{ GL_SHADER_STORAGE_BUFFER };
+        GL::Buffer m_partsVerticesIndices{ GL_SHADER_STORAGE_BUFFER };
+        GL::Buffer m_partsDescriptors{ GL_SHADER_STORAGE_BUFFER };
+
+        unsigned int m_lastVertexIndex = 0;
     };
 }

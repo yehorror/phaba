@@ -19,23 +19,23 @@ namespace Phaba::Detail
     Parts::Parts()
     {
         PartsStruct parts{};
-        m_partsBuffer.bufferData(&parts, sizeof(parts), GL_DYNAMIC_DRAW);
+        m_partsVertices.bufferData(&parts, sizeof(parts), GL_DYNAMIC_DRAW);
     }
 
     BodyPart Parts::CreatePart(std::span<Vector2> vertices)
     {
         // TODO memcpy?
-        auto mappedMemory = m_partsBuffer.mapMemory(GL_WRITE_ONLY);
+        auto mappedMemory = m_partsVertices.mapMemory(GL_WRITE_ONLY);
         auto verticesMemory = mappedMemory.get<Vector2>();
 
-        const auto startIndex = m_lastIndex;
+        const auto startIndex = m_lastVertexIndex;
 
         for (const auto& vertex : vertices)
         {
-            verticesMemory[m_lastIndex] = vertex;
-            ++m_lastIndex;
+            verticesMemory[m_lastVertexIndex] = vertex;
+            ++m_lastVertexIndex;
         }
 
-        return BodyPart(*this, startIndex, m_lastIndex);
+        return BodyPart(*this, startIndex, m_lastVertexIndex);
     }
 }

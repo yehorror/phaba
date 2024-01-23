@@ -83,12 +83,12 @@ namespace Phaba::Detail
     {
         return m_bodies.Create(def);
     }
-    /*
+    
     BodyPart Engine::CreateBodyPart(std::span<Vector2> vertices)
     {
-        return BodyPart(*this, );
+        return m_bodiesParts.CreatePart(vertices);
     }
-    */
+   
     void Engine::Step(TimeDelta time)
     {
         {
