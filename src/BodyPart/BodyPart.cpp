@@ -9,4 +9,9 @@ namespace Phaba
         , m_end(endIndex)
     {
     }
+
+    Detail::VerticesIndices BodyPart::GetVerticesIndices() const
+    {
+        return { m_start, m_end };
+    }
 }

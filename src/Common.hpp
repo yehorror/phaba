@@ -9,6 +9,8 @@ namespace Phaba
 
     namespace Detail
     {
+        using PartDescriptor = unsigned int;
+
         struct VerticesIndices
         {
             unsigned int start;

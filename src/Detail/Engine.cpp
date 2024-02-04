@@ -88,6 +88,11 @@ namespace Phaba::Detail
     {
         return m_bodiesParts.CreatePart(vertices);
     }
+
+    PartDescriptor Engine::CreatePartsDescriptor(std::span<VerticesIndices> partsVerticesIndices)
+    {
+        return m_bodiesParts.CreatePartDescriptor(partsVerticesIndices);
+    }
    
     void Engine::Step(TimeDelta time)
     {

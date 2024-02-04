@@ -18,6 +18,7 @@ namespace Phaba::Detail
 
         Body CreateBody(const BodyDef& def);
         BodyPart CreateBodyPart(std::span<const Vector2> vertices);
+        PartDescriptor CreatePartsDescriptor(std::span<VerticesIndices> partsVerticesIndices);
 
         void Step(TimeDelta time);
 

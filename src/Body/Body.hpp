@@ -21,6 +21,7 @@ namespace Phaba
         float angle{};
         float density{};
         BodyType type = BodyType::kDynamic;
+        Detail::PartDescriptor partDescriptor;
     };
 
     class Body

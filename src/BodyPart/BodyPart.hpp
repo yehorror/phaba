@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Common.hpp"
+
 namespace Phaba
 {
     namespace Detail
@@ -11,6 +13,8 @@ namespace Phaba
     {
     public:
         BodyPart(Detail::Parts& parts, unsigned int startIndex, unsigned int endIndex);
+
+        Detail::VerticesIndices GetVerticesIndices() const;
 
     private:
         Detail::Parts& m_parts;

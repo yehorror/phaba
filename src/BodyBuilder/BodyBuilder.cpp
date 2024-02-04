@@ -25,14 +25,15 @@ namespace Phaba
         return *this;
     }
 
-    BodyBuilder& BodyBuilder::Part(BodyPart part)
+    BodyBuilder& BodyBuilder::Part(const BodyPart& part)
     {
-        
+        m_partsIndices.push_back(part.GetVerticesIndices());
         return *this;
     }
 
     Body BodyBuilder::Build()
     {
+        m_bodyDef.partDescriptor = m_engine.CreatePartsDescriptor(m_partsIndices);
         return m_engine.CreateBody(m_bodyDef);
     }
 }

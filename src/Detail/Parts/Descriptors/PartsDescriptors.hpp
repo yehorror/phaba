@@ -6,8 +6,6 @@
 
 namespace Phaba::Detail
 {
-    using PartDescriptor = unsigned int;
-
     class PartsDescriptors
     {
     public:
