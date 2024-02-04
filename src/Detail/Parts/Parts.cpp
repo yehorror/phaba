@@ -8,6 +8,12 @@ namespace Phaba::Detail
 
     BodyPart Parts::CreatePart(std::span<const Vector2> vertices)
     {
-        auto verticesIndices = m_vertices.PutVertices(vertices);
+        const auto [start, end] = m_vertices.PutVertices(vertices);
+        return BodyPart(*this, start, end);
+    }
+
+    PartDescriptor Parts::CreatePartDescriptor(std::span<unsigned int> partsIndices)
+    {
+        return m_partsDescriptors.MakePartDescriptor(partsIndices);
     }
 }

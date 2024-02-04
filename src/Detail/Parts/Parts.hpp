@@ -6,6 +6,7 @@
 #include "BodyPart/BodyPart.hpp"
 #include "Descriptors/PartsDescriptors.hpp"
 #include "Vertices/PartsVertices.hpp"
+#include "Indices/PartsVerticesIndices.hpp"
 
 namespace Phaba::Detail
 {
@@ -16,11 +17,11 @@ namespace Phaba::Detail
 
         BodyPart CreatePart(std::span<const Vector2> vertices);
 
-        // PartDescriptor CreatePartDescriptor();
+        PartDescriptor CreatePartDescriptor(std::span<unsigned int> partsIndices);
 
     private:
         PartsVertices m_vertices;
-        GL::Buffer m_partsVerticesIndices{ GL_SHADER_STORAGE_BUFFER }; // represents indices of vertices of parts
-        GL::Buffer m_partsDescriptors{ GL_SHADER_STORAGE_BUFFER };  // represents indices of parts
+        PartsVerticesIndices m_partsVerticesIndices;
+        PartsDescriptors m_partsDescriptors;
     };
 }
