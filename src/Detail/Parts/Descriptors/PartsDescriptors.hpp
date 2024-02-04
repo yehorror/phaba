@@ -13,6 +13,8 @@ namespace Phaba::Detail
 
         PartDescriptor MakePartDescriptor(std::span<VerticesIndices> partsIndices);
 
+        void Bind();
+
     private:
         GL::Buffer m_partDescriptors{ GL_SHADER_STORAGE_BUFFER };
 

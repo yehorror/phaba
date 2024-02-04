@@ -13,6 +13,8 @@ namespace Phaba::Detail
 
         VerticesIndices PutVertices(std::span<const Vector2> vertices);
 
+        void Bind();
+
     private:
         GL::Buffer m_verticesBuffer{ GL_SHADER_STORAGE_BUFFER };
 

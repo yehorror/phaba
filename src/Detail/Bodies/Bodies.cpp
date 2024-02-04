@@ -13,6 +13,7 @@ namespace
         Vector2 velocity;
         float angle;
         BodyType type;
+        Detail::PartDescriptor partDescriptor;
     };
 
     struct BodiesStruct
@@ -42,6 +43,7 @@ namespace Phaba::Detail
         bodies->bodies[index].type = def.type;
         bodies->bodies[index].position = def.position;
         bodies->bodies[index].angle = def.angle;
+        bodies->bodies[index].partDescriptor = def.partDescriptor;
 
         return Body(*this, index);
     }

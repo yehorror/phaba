@@ -41,4 +41,10 @@ namespace Phaba::Detail
 
         return descriptor;
     }
+
+    void PartsDescriptors::Bind()
+    {
+        constexpr unsigned int kPartsDescriptorsBinding = 3;
+        m_partDescriptors.bindBase(kPartsDescriptorsBinding);
+    }
 }

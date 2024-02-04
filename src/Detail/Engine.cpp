@@ -17,6 +17,7 @@ namespace
         vec2 velocity;
         float angle;
         uint type;
+        uint partsDescriptor;
     };
 
     layout(std430, binding = 0) buffer WorldConfig
@@ -32,8 +33,25 @@ namespace
         Body bodies[];
     };
 
+    layout(std430, binding = 2) buffer Vertices
+    {
+        vec2 vertices[];
+    };
+
+    layout(std430, binding = 3) buffer PartsDescriptors
+    {
+        uint values[];
+    };
+
+    bool IsPointInsideOfShape(vec2 point, uint shapeIndex)
+    {
+        return false;
+    }
+
     void main()
     {
+        // I know it is not paralleled now
+        // It will be done a bit later when I get at least MVP of this library features done
         for (int i = 0; i < bodiesNum; ++i)
         {
             if (bodies[i].type == kStaticBodyType)
@@ -47,6 +65,14 @@ namespace
             // If the speed is variable through the time, the formula is
             // dx = (v1 + v2) * dt / 2.f;
             bodies[i].position += (originalVelocity + bodies[i].velocity) * timeDelta / 2.f;
+        }
+
+        for (int i = 0; i < bodiesNum; ++i)
+        {
+            for (int j = 0; j < bodiesNum; ++j)
+            {
+                
+            }
         }
     }
     )compute";

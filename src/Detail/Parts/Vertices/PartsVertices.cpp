@@ -38,4 +38,10 @@ namespace Phaba::Detail
 
         return { startIndex, m_lastVertexIndex };
     }
+
+    void PartsVertices::Bind()
+    {
+        constexpr unsigned int kPartsVerticesBinding = 2;
+        m_verticesBuffer.bindBase(kPartsVerticesBinding);
+    }
 }
