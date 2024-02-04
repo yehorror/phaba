@@ -19,7 +19,7 @@ namespace Phaba::Detail
         m_partDescriptors.bufferData(&descriptors, sizeof(descriptors), GL_DYNAMIC_DRAW);
     }
 
-    PartDescriptor PartsDescriptors::MakePartDescriptor(std::span<unsigned int> partsIndices)
+    PartDescriptor PartsDescriptors::MakePartDescriptor(std::span<VerticesIndices> partsIndices)
     {
         auto mappedMemory = m_partDescriptors.mapMemory(GL_WRITE_ONLY);
         auto descriptors = mappedMemory.get<DescriptorsStruct>();
@@ -32,7 +32,10 @@ namespace Phaba::Detail
 
         for (const auto partIndex : partsIndices)
         {
-            descriptors->value[m_lastFreeElementIndex] = partIndex;
+            descriptors->value[m_lastFreeElementIndex] = partIndex.start;
+            ++m_lastFreeElementIndex;
+
+            descriptors->value[m_lastFreeElementIndex] = partIndex.end;
             ++m_lastFreeElementIndex;
         }
 

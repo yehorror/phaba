@@ -6,12 +6,6 @@
 
 namespace Phaba::Detail
 {
-    struct VerticesIndices
-    {
-        unsigned int start;
-        unsigned int end;
-    };
-
     class PartsVertices
     {
     public:

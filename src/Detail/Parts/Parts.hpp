@@ -16,7 +16,7 @@ namespace Phaba::Detail
 
         BodyPart CreatePart(std::span<const Vector2> vertices);
 
-        PartDescriptor CreatePartDescriptor(std::span<unsigned int> partsIndices);
+        PartDescriptor CreatePartDescriptor(std::span<VerticesIndices> partsIndices);
 
     private:
         PartsVertices m_vertices;

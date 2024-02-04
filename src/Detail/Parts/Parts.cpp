@@ -12,7 +12,7 @@ namespace Phaba::Detail
         return BodyPart(*this, start, end);
     }
 
-    PartDescriptor Parts::CreatePartDescriptor(std::span<unsigned int> partsIndices)
+    PartDescriptor Parts::CreatePartDescriptor(std::span<VerticesIndices> partsIndices)
     {
         return m_partsDescriptors.MakePartDescriptor(partsIndices);
     }

@@ -12,8 +12,6 @@ namespace Phaba
     public:
         BodyPart(Detail::Parts& parts, unsigned int startIndex, unsigned int endIndex);
 
-        //VerticesIndices GetVerticesIndices() const;
-
     private:
         Detail::Parts& m_parts;
         const unsigned int m_start;
