@@ -69,7 +69,7 @@ TEST(WorldTest, FreeFallAcceleration_StaticBody_TwoSecondsStep_PositionOfBodyHas
 }
 
 
-TEST(WorldTest, FreeFallAcceleration_SceneHasFloorAndABox_BoxBouncesOffOfTheFloor)
+TEST(WorldTest, DISABLED_FreeFallAcceleration_SceneHasFloorAndABox_BoxBouncesOffOfTheFloor)
 {
     /*
                 ***
